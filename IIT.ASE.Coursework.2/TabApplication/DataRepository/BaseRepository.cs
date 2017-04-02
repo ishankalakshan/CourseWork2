@@ -1,31 +1,36 @@
-﻿using System.Data.SQLite;
+﻿using Dapper;
+using System;
+using System.Collections.Generic;
+using System.Data.SQLite;
+using System.Linq;
 using TabApplication.DataRepository.Interface;
 
 namespace TabApplication.DataRepository
 {
     public class BaseRepository : IBaseRepository
     {
-        private SQLiteConnection _sqlite_conn;
-        private SQLiteCommand _sqlite_cmd;
-        private SQLiteDataAdapter _sqliteDataAdapter;
-
-        public BaseRepository()
+        public SQLiteConnection _sqlite_conn;
+        public SQLiteCommand _sqlite_cmd;
+        public SQLiteDataAdapter _sqliteDataAdapter;
+        public static string DbFile
         {
-            _sqlite_conn = new SQLiteConnection("Data Source=IitStageCraft.db;Version=3;New=True;Compress=True;");
+            get { return Environment.CurrentDirectory + "\\IitStageCraftLocal.db"; }
         }
 
+        public SQLiteConnection GetDbContextLocal()
+        {
+            return new SQLiteConnection("Data Source=IitStageCraftLocal.db;Version=3;New=True;Compress=True;");
+        }
+       
         public void CreateTables()
         {
-            _sqlite_cmd = _sqlite_conn.CreateCommand();
-            _sqlite_conn.Open();
-
             var CustomerTableString = "CREATE TABLE IF NOT EXISTS Customer(" +
-                "CustomerId INTEGER PRIMARY KEY AUTOINCREMENT," +
-                "CustomerNic varchar(20) NOT NULL," +
-                "CustomerName varchar(100)," +
-                "CustomerEmail varchar(30)," +
-                "CustomerTel varchar(20)," +
-                "DeviceId varchar(20));";
+               "CustomerId INTEGER PRIMARY KEY AUTOINCREMENT," +
+               "CustomerNic varchar(20) NOT NULL," +
+               "CustomerName varchar(100)," +
+               "CustomerEmail varchar(30)," +
+               "CustomerTel varchar(20)," +
+               "DeviceId varchar(20));";
 
             var SeatTableString = "CREATE TABLE IF NOT EXISTS Seat(" +
                 "Id INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -34,9 +39,32 @@ namespace TabApplication.DataRepository
 
             var BookingTableString = "CREATE TABLE IF NOT EXISTS Booking(BookingId INTEGER PRIMARY KEY AUTOINCREMENT,DeviceId varchar(20),SeatId INTEGER,CustomerId INTEGER,BookingStatus INTEGER NOT NULL,Uploaded BOOLEAN NOT NULL,FOREIGN KEY(SeatId) REFERENCES Seat(SeatId),FOREIGN KEY(CustomerId) REFERENCES Customer(CustomerId));";
 
-            _sqlite_cmd.CommandText = CustomerTableString + SeatTableString + BookingTableString;
-            _sqlite_cmd.ExecuteNonQuery();
-            _sqlite_conn.Close();
+            using (var db = GetDbContextLocal())
+            {
+                db.Open();
+                _sqlite_cmd = db.CreateCommand();
+                _sqlite_cmd.CommandText = CustomerTableString + SeatTableString + BookingTableString;
+                _sqlite_cmd.ExecuteNonQuery();
+                db.Close();
+            }
+
         }
+
+        public IList<T> Select<T>(string sql, object parameters=null,bool fromLocal = true)
+        {
+            if (fromLocal)
+            {
+                using (var db = GetDbContextLocal())
+                {
+                    var result = db.Query<T>(sql, parameters);
+                    return result.ToList();
+                }
+            }
+            else
+            {
+                return null;//For remote databse
+            }                        
+        }
+
     }
 }
