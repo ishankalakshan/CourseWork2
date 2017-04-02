@@ -50,9 +50,9 @@ namespace TabApplication.DataRepository
 
         }
 
-        public IList<T> Select<T>(string sql, object parameters=null,bool fromLocal = true)
+        public IList<T> Select<T>(string sql, object parameters=null,bool local = true)
         {
-            if (fromLocal)
+            if (local)
             {
                 using (var db = GetDbContextLocal())
                 {
@@ -66,5 +66,23 @@ namespace TabApplication.DataRepository
             }                        
         }
 
+        public void Insert(string sql, object parameters = null, bool local = true)
+        {
+            if (local)
+            {
+                using (var db = GetDbContextLocal())
+                {
+                    db.Execute(sql, parameters);
+                }
+            }
+        }
+
+        public void ExecuteScaler(string sql, object parameters)
+        {
+            using (var db = GetDbContextLocal())
+            {
+                db.ExecuteScalar(sql, parameters);
+            }
+        }
     }
 }

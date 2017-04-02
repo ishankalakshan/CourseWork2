@@ -16,5 +16,16 @@ namespace TabApplication.DataRepository
             var sql = "SELECT * FROM Seat";
             var res = _baseRepository.Select<Seat>(sql);
         }
+
+        public void InitializeSeatsInLocalDbIfNotExists()
+        {
+            var sql = "SELECT * FROM Seat";
+            var res = _baseRepository.Select<Seat>(sql);
+
+            if (res.Count<=0)
+            {
+                
+            }
+        }
     }
 }
