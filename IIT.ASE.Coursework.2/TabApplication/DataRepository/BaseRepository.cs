@@ -74,6 +74,21 @@ namespace TabApplication.DataRepository
             }
         }
 
+        public int InsertSingle(string sql,object parameters=null,bool local = true)
+        {
+            if (local)
+            {
+                using (var db = GetDbContextLocal())
+                {
+                    return db.Query<int>(sql, parameters).First();
+                }
+            }
+            else
+            {
+                return 0;
+            }            
+        }
+
         public void ExecuteScaler(string sql, object parameters)
         {
             using (var db = GetDbContextLocal())

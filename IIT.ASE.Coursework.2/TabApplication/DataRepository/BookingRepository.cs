@@ -12,11 +12,23 @@ namespace TabApplication.DataRepository
             _baseRepository=new BaseRepository();
         }
 
-        public void InsertCustomerToLocal(IList<Customer> customer)
+        public int InsertCustomerToLocal(Customer customer)
         {
             const string sql = "INSERT INTO Customer(CustomerNic,CustomerName,CustomerEmail,CustomerTel,DeviceId) " +
-                               "VALUES(@CustomerNic,@CustomerName,@CustomerEmail,@CustomerTel,@DeviceId)";
-            _baseRepository.Insert(sql, customer);
+                               "VALUES(@CustomerNic,@CustomerName,@CustomerEmail,@CustomerTel,@DeviceId);SELECT last_insert_rowid();";
+            return _baseRepository.InsertSingle(sql, customer, true);
+        }
+
+        public IList<Customer> SelectCustomer(string CustomerNic)
+        {
+            const string sql = "SELECT * FROM Customer WHERE CustomerNic=@CustomerNic";
+
+            var queryArgs = new
+            {
+                CustomerNic
+            };
+
+            return _baseRepository.Select<Customer>(sql,queryArgs);
         }
 
     }
