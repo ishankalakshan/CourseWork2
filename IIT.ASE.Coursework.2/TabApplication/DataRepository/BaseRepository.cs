@@ -12,10 +12,7 @@ namespace TabApplication.DataRepository
         public SQLiteConnection _sqlite_conn;
         public SQLiteCommand _sqlite_cmd;
         public SQLiteDataAdapter _sqliteDataAdapter;
-        public static string DbFile
-        {
-            get { return Environment.CurrentDirectory + "\\IitStageCraftLocal.db"; }
-        }
+        public static string DbFile => Environment.CurrentDirectory + "\\IitStageCraftLocal.db";
 
         public SQLiteConnection GetDbContextLocal()
         {

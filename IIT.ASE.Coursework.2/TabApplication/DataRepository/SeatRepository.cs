@@ -5,7 +5,7 @@ namespace TabApplication.DataRepository
 {
     public class SeatRepository : BaseRepository
     {
-        private BaseRepository _baseRepository;
+        private readonly BaseRepository _baseRepository;
 
         public SeatRepository()
         {
