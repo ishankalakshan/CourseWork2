@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using TabApplication.Models;
 using TabApplication.Services;
+using TabApplication.Utility;
 
 namespace TabApplication.Forms
 {
@@ -22,16 +24,52 @@ namespace TabApplication.Forms
         {
             //_SeatService.createdb();
             SeedInitialSeatData();
+            UpdateSeatStatus();
         }
 
         private void SeedInitialSeatData()
         {
-            var seatIds = new List<Seat>();
+            var seatObjs = new List<Seat>();
             var seats = gbSeatPlan.Controls.OfType<Button>();
             foreach (var seat in seats)
             {
                 var seatId = Convert.ToInt32(seat.Name.Substring(seat.Name.LastIndexOf('_') + 1));
-                seatIds.Add(new Seat(){SeatId = seatId,SeatStatusId = 1});
+                seatObjs.Add(new Seat(){SeatId = seatId,SeatStatusId = 1});
+            }
+            _SeatService.LoadSeatsToLocalIfNotExists(seatObjs);
+        }
+
+        private void UpdateSeatStatus()
+        {
+            var seatsButtons = gbSeatPlan.Controls.OfType<Button>();
+            var seats = _SeatService.UpdateSeatStatusFromLocal();
+
+            foreach (var button in seatsButtons)
+            {
+                var seatId = Convert.ToInt32(button.Name.Substring(button.Name.LastIndexOf('_') + 1));
+                foreach (var seat in seats)
+                {
+                    if (seat.SeatId== seatId)
+                    {
+                        UpdateButtonColor(button,seat);
+                    }
+                }
+            }
+        }
+
+        private static void UpdateButtonColor(Button buttton,Seat seat)
+        {
+            if (seat.SeatStatusId==(int)StaticData.SeatStatusEnum.Available)
+            {
+                buttton.BackColor = Color.Lime;
+            }
+            else if (seat.SeatStatusId == (int)StaticData.SeatStatusEnum.Pending)
+            {
+                buttton.BackColor = Color.Yellow;
+            }
+            else if (seat.SeatStatusId == (int)StaticData.SeatStatusEnum.Reserved)
+            {
+                buttton.BackColor = Color.Red;
             }
         }
     }

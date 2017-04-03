@@ -7,7 +7,7 @@ namespace TabApplication.Services
 {
     public class SeatService
     {
-        SeatRepository _seatRepository;
+        private readonly SeatRepository _seatRepository;
 
         public SeatService()
         {
@@ -21,10 +21,11 @@ namespace TabApplication.Services
             {
                 _seatRepository.CreateTables();
             }
+        }
 
-            _seatRepository.UpdateSeatStatusFromLocal();
-
-
+        public IList<Seat> UpdateSeatStatusFromLocal()
+        {
+            return _seatRepository.UpdateSeatStatusFromLocal();
         }
 
         public void LoadSeatsToLocalIfNotExists(List<Seat> seats)

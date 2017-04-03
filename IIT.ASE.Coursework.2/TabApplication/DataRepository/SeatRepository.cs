@@ -12,10 +12,10 @@ namespace TabApplication.DataRepository
             _baseRepository = new BaseRepository();
         }
 
-        public void UpdateSeatStatusFromLocal()
+        public IList<Seat> UpdateSeatStatusFromLocal()
         {
             const string sql = "SELECT * FROM Seat";
-            var res = _baseRepository.Select<Seat>(sql);
+            return _baseRepository.Select<Seat>(sql);
         }
 
         public void InitializeSeatsInLocalDb(List<Seat> seats)

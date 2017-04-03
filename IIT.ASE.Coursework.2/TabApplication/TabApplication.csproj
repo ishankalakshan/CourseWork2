@@ -80,6 +80,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\SeatService.cs" />
+    <Compile Include="Utility\StaticData.cs" />
     <Compile Include="Utility\UtilityMethod.cs" />
     <EmbeddedResource Include="Forms\SeatView.resx">
       <DependentUpon>SeatView.cs</DependentUpon>
