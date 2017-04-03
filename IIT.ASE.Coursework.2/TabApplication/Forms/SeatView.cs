@@ -11,12 +11,12 @@ namespace TabApplication.Forms
 {
     public partial class SeatView : Form
     {
-        private SeatService _SeatService;
+        private readonly SeatService _seatService;
 
         public SeatView()
         {
             InitializeComponent();
-            _SeatService = new SeatService();
+            _seatService = new SeatService();
             tempload();
         }
 
@@ -36,13 +36,13 @@ namespace TabApplication.Forms
                 var seatId = Convert.ToInt32(seat.Name.Substring(seat.Name.LastIndexOf('_') + 1));
                 seatObjs.Add(new Seat(){SeatId = seatId,SeatStatusId = 1});
             }
-            _SeatService.LoadSeatsToLocalIfNotExists(seatObjs);
+            _seatService.LoadSeatsToLocalIfNotExists(seatObjs);
         }
 
         private void UpdateSeatStatus()
         {
             var seatsButtons = gbSeatPlan.Controls.OfType<Button>();
-            var seats = _SeatService.UpdateSeatStatusFromLocal();
+            var seats = _seatService.UpdateSeatStatusFromLocal();
 
             foreach (var button in seatsButtons)
             {
