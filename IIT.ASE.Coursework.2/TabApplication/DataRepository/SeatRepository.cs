@@ -1,4 +1,5 @@
-﻿using TabApplication.Models;
+﻿using System.Collections.Generic;
+using TabApplication.Models;
 
 namespace TabApplication.DataRepository
 {
@@ -13,19 +14,20 @@ namespace TabApplication.DataRepository
 
         public void UpdateSeatStatusFromLocal()
         {
-            var sql = "SELECT * FROM Seat";
+            const string sql = "SELECT * FROM Seat";
             var res = _baseRepository.Select<Seat>(sql);
         }
 
-        public void InitializeSeatsInLocalDbIfNotExists()
+        public void InitializeSeatsInLocalDb(List<Seat> seats)
         {
-            var sql = "SELECT * FROM Seat";
-            var res = _baseRepository.Select<Seat>(sql);
+            const string sql = "INSERT INTO Seat(SeatId,SeatStatusId) VALUES(@SeatId,@SeatStatusId)";
+            _baseRepository.Insert(sql,seats);
+        }
 
-            if (res.Count<=0)
-            {
-                
-            }
+        public bool IsInitialSeatDataPresentInLocal()
+        {
+            const string sql = "SELECT * FROM Seat";
+            return _baseRepository.Select<Seat>(sql).Count>0;
         }
     }
 }

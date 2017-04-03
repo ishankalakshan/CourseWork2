@@ -1,5 +1,7 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using TabApplication.DataRepository;
+using TabApplication.Models;
 
 namespace TabApplication.Services
 {
@@ -23,6 +25,16 @@ namespace TabApplication.Services
             _seatRepository.UpdateSeatStatusFromLocal();
 
 
+        }
+
+        public void LoadSeatsToLocalIfNotExists(List<Seat> seats)
+        {
+            var exists = _seatRepository.IsInitialSeatDataPresentInLocal();
+
+            if (!exists)
+            {
+                _seatRepository.InitializeSeatsInLocalDb(seats);
+            }
         }
     }
 }
