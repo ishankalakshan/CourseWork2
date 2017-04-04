@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using TabApplication.Models;
 using TabApplication.Services;
@@ -73,11 +76,35 @@ namespace TabApplication.Forms
             }
         }
 
-        private void OnSeatClick(object sender, EventArgs e)
+        private void OnSeatClickAsync(object sender, EventArgs e)
         {
-            var button = (Button) sender;
+            var button = (Button)sender;
             var seatId = Convert.ToInt32(button.Name.Substring(button.Name.LastIndexOf('_') + 1));
             MessageBox.Show(seatId.ToString());
+
+            var res = testmethod();
+        }
+
+        private async Task testmethod()
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://iitstagecraftremotewebapi.azurewebsites.net");
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                //GET Method  
+                HttpResponseMessage response = await client.GetAsync("api/test");
+                if (response.IsSuccessStatusCode)
+                {
+                    var department = response.Content.ReadAsStringAsync(); ;
+
+                }
+                else
+                {
+                    Console.WriteLine("Internal server Error");
+                }
+            }
         }
 
     }

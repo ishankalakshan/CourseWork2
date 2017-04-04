@@ -162,7 +162,7 @@
             this.seatId_107.TabIndex = 0;
             this.seatId_107.Text = "107";
             this.seatId_107.UseVisualStyleBackColor = true;
-            this.seatId_107.Click += new System.EventHandler(this.OnSeatClick);
+            this.seatId_107.Click += new System.EventHandler(this.OnSeatClickAsync);
             // 
             // seatId_108
             // 
@@ -172,7 +172,7 @@
             this.seatId_108.TabIndex = 0;
             this.seatId_108.Text = "108";
             this.seatId_108.UseVisualStyleBackColor = true;
-            this.seatId_108.Click += new System.EventHandler(this.OnSeatClick);
+            this.seatId_108.Click += new System.EventHandler(this.OnSeatClickAsync);
             // 
             // seatId_104
             // 
@@ -182,7 +182,7 @@
             this.seatId_104.TabIndex = 0;
             this.seatId_104.Text = "104";
             this.seatId_104.UseVisualStyleBackColor = true;
-            this.seatId_104.Click += new System.EventHandler(this.OnSeatClick);
+            this.seatId_104.Click += new System.EventHandler(this.OnSeatClickAsync);
             // 
             // seatId_106
             // 
@@ -192,7 +192,7 @@
             this.seatId_106.TabIndex = 0;
             this.seatId_106.Text = "106";
             this.seatId_106.UseVisualStyleBackColor = true;
-            this.seatId_106.Click += new System.EventHandler(this.OnSeatClick);
+            this.seatId_106.Click += new System.EventHandler(this.OnSeatClickAsync);
             // 
             // seatId_103
             // 
@@ -202,7 +202,7 @@
             this.seatId_103.TabIndex = 0;
             this.seatId_103.Text = "103";
             this.seatId_103.UseVisualStyleBackColor = true;
-            this.seatId_103.Click += new System.EventHandler(this.OnSeatClick);
+            this.seatId_103.Click += new System.EventHandler(this.OnSeatClickAsync);
             // 
             // seatId_109
             // 
@@ -212,7 +212,7 @@
             this.seatId_109.TabIndex = 0;
             this.seatId_109.Text = "109";
             this.seatId_109.UseVisualStyleBackColor = true;
-            this.seatId_109.Click += new System.EventHandler(this.OnSeatClick);
+            this.seatId_109.Click += new System.EventHandler(this.OnSeatClickAsync);
             // 
             // seatId_105
             // 
@@ -222,7 +222,7 @@
             this.seatId_105.TabIndex = 0;
             this.seatId_105.Text = "105";
             this.seatId_105.UseVisualStyleBackColor = true;
-            this.seatId_105.Click += new System.EventHandler(this.OnSeatClick);
+            this.seatId_105.Click += new System.EventHandler(this.OnSeatClickAsync);
             // 
             // seatId_110
             // 
@@ -232,7 +232,7 @@
             this.seatId_110.TabIndex = 0;
             this.seatId_110.Text = "110";
             this.seatId_110.UseVisualStyleBackColor = true;
-            this.seatId_110.Click += new System.EventHandler(this.OnSeatClick);
+            this.seatId_110.Click += new System.EventHandler(this.OnSeatClickAsync);
             // 
             // seatId_102
             // 
@@ -242,7 +242,7 @@
             this.seatId_102.TabIndex = 0;
             this.seatId_102.Text = "102";
             this.seatId_102.UseVisualStyleBackColor = true;
-            this.seatId_102.Click += new System.EventHandler(this.OnSeatClick);
+            this.seatId_102.Click += new System.EventHandler(this.OnSeatClickAsync);
             // 
             // seatId_111
             // 
@@ -252,7 +252,7 @@
             this.seatId_111.TabIndex = 0;
             this.seatId_111.Text = "111";
             this.seatId_111.UseVisualStyleBackColor = true;
-            this.seatId_111.Click += new System.EventHandler(this.OnSeatClick);
+            this.seatId_111.Click += new System.EventHandler(this.OnSeatClickAsync);
             // 
             // seatId_101
             // 
@@ -262,7 +262,7 @@
             this.seatId_101.TabIndex = 0;
             this.seatId_101.Text = "101";
             this.seatId_101.UseVisualStyleBackColor = true;
-            this.seatId_101.Click += new System.EventHandler(this.OnSeatClick);
+            this.seatId_101.Click += new System.EventHandler(this.OnSeatClickAsync);
             // 
             // seatId_100
             // 
@@ -272,7 +272,7 @@
             this.seatId_100.TabIndex = 0;
             this.seatId_100.Text = "100";
             this.seatId_100.UseVisualStyleBackColor = true;
-            this.seatId_100.Click += new System.EventHandler(this.OnSeatClick);
+            this.seatId_100.Click += new System.EventHandler(this.OnSeatClickAsync);
             // 
             // SeatView
             // 
