@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.26228.4
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TabApplication", "TabApplication\TabApplication.csproj", "{3FC01EDD-9174-43A1-8C10-D1531692F6CA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DesktopManager", "DesktopManager\DesktopManager.csproj", "{A8BB670F-2589-430F-B44E-9754C05ACC60}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{3FC01EDD-9174-43A1-8C10-D1531692F6CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3FC01EDD-9174-43A1-8C10-D1531692F6CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3FC01EDD-9174-43A1-8C10-D1531692F6CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A8BB670F-2589-430F-B44E-9754C05ACC60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8BB670F-2589-430F-B44E-9754C05ACC60}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8BB670F-2589-430F-B44E-9754C05ACC60}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8BB670F-2589-430F-B44E-9754C05ACC60}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
