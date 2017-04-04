@@ -4,27 +4,260 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl" Namespace="DTA.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2005">
-        <EntityContainer Name="DTATargetContainer" >
-        </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+    <Schema Namespace="DTA.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="DTAStoreContainer">
+    <EntitySet Name="Customers" EntityType="DTA.Store.Customers" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Bookings" EntityType="DTA.Store.Bookings" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Seats" EntityType="DTA.Store.Seats" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Employees" EntityType="DTA.Store.Employees" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="BookingCustomer" Association="DTA.Store.BookingCustomer">
+      <End Role="Booking" EntitySet="Bookings" />
+      <End Role="Customer" EntitySet="Customers" />
+    </AssociationSet>
+    <AssociationSet Name="BookingEmployee" Association="DTA.Store.BookingEmployee">
+      <End Role="Booking" EntitySet="Bookings" />
+      <End Role="Employee" EntitySet="Employees" />
+    </AssociationSet>
+    <AssociationSet Name="BookingSeat" Association="DTA.Store.BookingSeat">
+      <End Role="Booking" EntitySet="Bookings" />
+      <End Role="Seat" EntitySet="Seats" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Customers">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CustomerId" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="DeviceId" Type="int" Nullable="false" />
+    <Property Name="CustomerNic" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="CustomerName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="CustomerEmail" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="CustomerTel" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Bookings">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="BookingId" Type="smallint" Nullable="false" />
+    <Property Name="DeviceId" Type="int" Nullable="false" />
+    <Property Name="BookingStatus" Type="smallint" Nullable="false" />
+    <Property Name="Customer_Id" Type="int" Nullable="false" />
+    <Property Name="Employee_Id" Type="int" Nullable="false" />
+    <Property Name="Seat_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Seats">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SeatId" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="SeatStatusId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Employees">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EmployeeName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="EmployeeUsername" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="EmployeePassword" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="HasDtaAccess" Type="bit" Nullable="false" />
+    <Property Name="HasTabAccess" Type="bit" Nullable="false" />
+  </EntityType>
+  <Association Name="BookingCustomer">
+    <End Role="Booking" Type="DTA.Store.Bookings" Multiplicity="*" />
+    <End Role="Customer" Type="DTA.Store.Customers" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Booking">
+        <PropertyRef Name="Customer_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="BookingEmployee">
+    <End Role="Booking" Type="DTA.Store.Bookings" Multiplicity="*" />
+    <End Role="Employee" Type="DTA.Store.Employees" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Booking">
+        <PropertyRef Name="Employee_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="BookingSeat">
+    <End Role="Booking" Type="DTA.Store.Bookings" Multiplicity="*" />
+    <End Role="Seat" Type="DTA.Store.Seats" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Seat">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Booking">
+        <PropertyRef Name="Seat_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="DTA" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
         <EntityContainer Name="DTAContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Customers" EntityType="DTA.Customer" />
+          <EntitySet Name="Bookings" EntityType="DTA.Booking" />
+          <EntitySet Name="Seats" EntityType="DTA.Seat" />
+          <EntitySet Name="Employees" EntityType="DTA.Employee" />
+          <AssociationSet Name="BookingCustomer" Association="DTA.BookingCustomer">
+            <End Role="Booking" EntitySet="Bookings" />
+            <End Role="Customer" EntitySet="Customers" />
+          </AssociationSet>
+          <AssociationSet Name="BookingEmployee" Association="DTA.BookingEmployee">
+            <End Role="Booking" EntitySet="Bookings" />
+            <End Role="Employee" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="BookingSeat" Association="DTA.BookingSeat">
+            <End Role="Booking" EntitySet="Bookings" />
+            <End Role="Seat" EntitySet="Seats" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerId" Type="String" Nullable="false" />
+          <Property Name="DeviceId" Type="Int32" Nullable="false" />
+          <Property Name="CustomerNic" Type="String" Nullable="false" />
+          <Property Name="CustomerName" Type="String" Nullable="false" />
+          <Property Name="CustomerEmail" Type="String" Nullable="false" />
+          <Property Name="CustomerTel" Type="String" Nullable="false" />
+          <NavigationProperty Name="Bookings" Relationship="DTA.BookingCustomer" FromRole="Customer" ToRole="Booking" />
+        </EntityType>
+        <EntityType Name="Booking">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BookingId" Type="Int16" Nullable="false" />
+          <Property Name="DeviceId" Type="Int32" Nullable="false" />
+          <Property Name="BookingStatus" Type="Int16" Nullable="false" />
+          <NavigationProperty Name="Customer" Relationship="DTA.BookingCustomer" FromRole="Booking" ToRole="Customer" />
+          <NavigationProperty Name="Employee" Relationship="DTA.BookingEmployee" FromRole="Booking" ToRole="Employee" />
+          <NavigationProperty Name="Seat" Relationship="DTA.BookingSeat" FromRole="Booking" ToRole="Seat" />
+        </EntityType>
+        <EntityType Name="Seat">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SeatId" Type="String" Nullable="false" />
+          <Property Name="SeatStatusId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Booking" Relationship="DTA.BookingSeat" FromRole="Seat" ToRole="Booking" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmployeeName" Type="String" Nullable="false" />
+          <Property Name="EmployeeUsername" Type="String" Nullable="false" />
+          <Property Name="EmployeePassword" Type="String" Nullable="false" />
+          <Property Name="HasDtaAccess" Type="Boolean" Nullable="false" />
+          <Property Name="HasTabAccess" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Bookings" Relationship="DTA.BookingEmployee" FromRole="Employee" ToRole="Booking" />
+        </EntityType>
+        <Association Name="BookingCustomer">
+          <End Type="DTA.Booking" Role="Booking" Multiplicity="*" />
+          <End Type="DTA.Customer" Role="Customer" Multiplicity="1" />
+        </Association>
+        <Association Name="BookingEmployee">
+          <End Type="DTA.Booking" Role="Booking" Multiplicity="*" />
+          <End Type="DTA.Employee" Role="Employee" Multiplicity="1" />
+        </Association>
+        <Association Name="BookingSeat">
+          <End Type="DTA.Booking" Role="Booking" Multiplicity="0..1" />
+          <End Type="DTA.Seat" Role="Seat" Multiplicity="1" />
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
-      <Mapping xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs" Space="C-S">
-        <Alias Key="Model" Value="DTA" />
-        <Alias Key="Target" Value="DTA.Store" />
-        <EntityContainerMapping CdmEntityContainer="DTAContainer" StorageEntityContainer="DTATargetContainer">
-        </EntityContainerMapping>
-      </Mapping>
-    </edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="DTAStoreContainer" CdmEntityContainer="DTAContainer">
+    <EntitySetMapping Name="Customers">
+      <EntityTypeMapping TypeName="IsTypeOf(DTA.Customer)">
+        <MappingFragment StoreEntitySet="Customers">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+          <ScalarProperty Name="DeviceId" ColumnName="DeviceId" />
+          <ScalarProperty Name="CustomerNic" ColumnName="CustomerNic" />
+          <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+          <ScalarProperty Name="CustomerEmail" ColumnName="CustomerEmail" />
+          <ScalarProperty Name="CustomerTel" ColumnName="CustomerTel" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Bookings">
+      <EntityTypeMapping TypeName="IsTypeOf(DTA.Booking)">
+        <MappingFragment StoreEntitySet="Bookings">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="BookingId" ColumnName="BookingId" />
+          <ScalarProperty Name="DeviceId" ColumnName="DeviceId" />
+          <ScalarProperty Name="BookingStatus" ColumnName="BookingStatus" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Seats">
+      <EntityTypeMapping TypeName="IsTypeOf(DTA.Seat)">
+        <MappingFragment StoreEntitySet="Seats">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="SeatId" ColumnName="SeatId" />
+          <ScalarProperty Name="SeatStatusId" ColumnName="SeatStatusId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Employees">
+      <EntityTypeMapping TypeName="IsTypeOf(DTA.Employee)">
+        <MappingFragment StoreEntitySet="Employees">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="EmployeeName" ColumnName="EmployeeName" />
+          <ScalarProperty Name="EmployeeUsername" ColumnName="EmployeeUsername" />
+          <ScalarProperty Name="EmployeePassword" ColumnName="EmployeePassword" />
+          <ScalarProperty Name="HasDtaAccess" ColumnName="HasDtaAccess" />
+          <ScalarProperty Name="HasTabAccess" ColumnName="HasTabAccess" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="BookingCustomer" TypeName="DTA.BookingCustomer" StoreEntitySet="Bookings">
+      <EndProperty Name="Customer">
+        <ScalarProperty Name="Id" ColumnName="Customer_Id" />
+      </EndProperty>
+      <EndProperty Name="Booking">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="BookingEmployee" TypeName="DTA.BookingEmployee" StoreEntitySet="Bookings">
+      <EndProperty Name="Employee">
+        <ScalarProperty Name="Id" ColumnName="Employee_Id" />
+      </EndProperty>
+      <EndProperty Name="Booking">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="BookingSeat" TypeName="DTA.BookingSeat" StoreEntitySet="Bookings">
+      <EndProperty Name="Seat">
+        <ScalarProperty Name="Id" ColumnName="Seat_Id" />
+      </EndProperty>
+      <EndProperty Name="Booking">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
   </edmx:Runtime>
   <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
@@ -38,6 +271,7 @@
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="True" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
       </DesignerInfoPropertySet>
     </edmx:Options>
     <!-- Diagram content (shape and connector positions) -->
