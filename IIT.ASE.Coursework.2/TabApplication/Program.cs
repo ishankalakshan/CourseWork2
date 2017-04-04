@@ -14,7 +14,7 @@ namespace TabApplication
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new BookingForm());
+            Application.Run(new SeatView());
         }
     }
 }

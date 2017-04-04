@@ -2,13 +2,13 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 04/04/2017 10:17:23
+-- Date Created: 04/04/2017 11:57:45
 -- Generated from EDMX file: D:\121\MSc\CourseWork2\IIT.ASE.Coursework.2\DesktopManager\DTA.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
 GO
-USE [IitStageCraftRemote];
+USE [iitstagecraftremote];
 GO
 IF SCHEMA_ID(N'dbo') IS NULL EXECUTE(N'CREATE SCHEMA [dbo]');
 GO
@@ -17,11 +17,32 @@ GO
 -- Dropping existing FOREIGN KEY constraints
 -- --------------------------------------------------
 
+IF OBJECT_ID(N'[dbo].[FK_BookingCustomer]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Bookings] DROP CONSTRAINT [FK_BookingCustomer];
+GO
+IF OBJECT_ID(N'[dbo].[FK_BookingEmployee]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Bookings] DROP CONSTRAINT [FK_BookingEmployee];
+GO
+IF OBJECT_ID(N'[dbo].[FK_BookingSeat]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Bookings] DROP CONSTRAINT [FK_BookingSeat];
+GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
 -- --------------------------------------------------
 
+IF OBJECT_ID(N'[dbo].[Customers]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Customers];
+GO
+IF OBJECT_ID(N'[dbo].[Bookings]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Bookings];
+GO
+IF OBJECT_ID(N'[dbo].[Seats]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Seats];
+GO
+IF OBJECT_ID(N'[dbo].[Employees]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Employees];
+GO
 
 -- --------------------------------------------------
 -- Creating all tables
