@@ -19,7 +19,14 @@ namespace TabApplication.DataRepository
             return _baseRepository.InsertSingle(sql, customer, true);
         }
 
-        public IList<Customer> SelectCustomer(string CustomerNic)
+        public int InsertBookingToLocal(Booking booking)
+        {
+            const string sql = "INSERT INTO Booking(DeviceId,SeatId,CustomerId,BookingStatus,Uploaded) " +
+                               "VALUES(@DeviceId,@SeatId,@CustomerId,@BookingStatus,@Uploaded);SELECT last_insert_rowid();";
+            return _baseRepository.InsertSingle(sql, booking, true);
+        }
+
+        public IList<Customer> SelectCustomer(string CustomerNic,bool local=true)
         {
             const string sql = "SELECT * FROM Customer WHERE CustomerNic=@CustomerNic";
 
@@ -28,7 +35,7 @@ namespace TabApplication.DataRepository
                 CustomerNic
             };
 
-            return _baseRepository.Select<Customer>(sql,queryArgs);
+            return _baseRepository.Select<Customer>(sql,queryArgs,local);
         }
 
     }

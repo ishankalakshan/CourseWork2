@@ -17,12 +17,12 @@ namespace TabApplication.Forms
         {
             InitializeComponent();
             _seatService = new SeatService();
-            tempload();
+            InitializeData();
         }
 
-        public void tempload()
+        public void InitializeData()
         {
-            //_SeatService.createdb();
+            _seatService.CreateDbIfNotExists();
             SeedInitialSeatData();
             UpdateSeatStatus();
         }
@@ -72,5 +72,13 @@ namespace TabApplication.Forms
                 buttton.BackColor = Color.Red;
             }
         }
+
+        private void OnSeatClick(object sender, EventArgs e)
+        {
+            var button = (Button) sender;
+            var seatId = Convert.ToInt32(button.Name.Substring(button.Name.LastIndexOf('_') + 1));
+            MessageBox.Show(seatId.ToString());
+        }
+
     }
 }

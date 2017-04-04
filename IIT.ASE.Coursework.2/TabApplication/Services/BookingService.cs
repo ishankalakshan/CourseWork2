@@ -14,7 +14,7 @@ namespace TabApplication.Services
 
         public bool InsertCustomer(Customer customer)
         {
-            if (CheckWhetherUserExists(customer))
+            if (CheckWhetherUserExistsInLocal(customer))
             {
                 return false;
             }
@@ -25,11 +25,21 @@ namespace TabApplication.Services
             }          
         }
 
-        public bool CheckWhetherUserExists(Customer customer)
+        public bool CheckWhetherUserExistsInLocal(Customer customer)
         {
             var result = _bookingRepository.SelectCustomer(customer.CustomerNic).Count;
             return result > 0;
         }
 
+        public void InsertBookingToLocal(Booking booking)
+        {
+            var insertedBookingId = _bookingRepository.InsertBookingToLocal(booking);
+        }
+
+        public bool CheckWhetherUserExistsInRemote(Customer customer)
+        {
+            var result = _bookingRepository.SelectCustomer(customer.CustomerNic,false).Count;
+            return result > 0;
+        }
     }
 }

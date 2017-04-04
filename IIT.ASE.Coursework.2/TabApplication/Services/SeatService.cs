@@ -14,7 +14,7 @@ namespace TabApplication.Services
             _seatRepository = new SeatRepository();
         }
 
-        public void createdb()
+        public void CreateDbIfNotExists()
         {
              var res = File.Exists(BaseRepository.DbFile);
             if (!res)
