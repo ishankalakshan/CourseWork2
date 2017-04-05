@@ -75,6 +75,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataRepository\BaseRepository.cs" />
+    <Compile Include="DataRepository\BaseWebApiCall.cs" />
     <Compile Include="DataRepository\BookingRepository.cs" />
     <Compile Include="DataRepository\Interface\IBaseRepository.cs" />
     <Compile Include="DataRepository\SeatRepository.cs" />

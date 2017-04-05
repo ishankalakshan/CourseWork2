@@ -3,6 +3,7 @@ using System;
 using System.Web.Http;
 using IitStagecraftRemoteWebApi.Models;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace IitStagecraftRemoteWebApi.Controllers
 {
@@ -11,19 +12,22 @@ namespace IitStagecraftRemoteWebApi.Controllers
         private BaseRepository _baseRepo = new BaseRepository();
 
         [HttpPost]
-        [Route("api/GetCustomers")]
-        public string GetCustomer(List<Customer> customer)
+        [Route("api/InsertOrUpdateCustomer")]
+        public int InsertOrUpdateCustomer(Customer customer)
         {
-            var res = _baseRepo.Select<Seat>("Select * from Seats");
-            try
+            var res = _baseRepo.Select<Seat>("Select * from Customers WHERE CustomerNic=@CustomerNic", customer);
+            if (res.Count == 0)
             {
-                return "Hello world";
+                var sql = "INSERT INTO Customers(CustomerNic,CustomerName,CustomerEmail,CustomerTel)" +
+                    "VALUES (@CustomerNic,@CustomerName,@CustomerEmail,@CustomerTel);SELECT CAST(SCOPE_IDENTITY() as int)";
+                return _baseRepo.Select<int>(sql, customer).Single();
             }
-            catch (Exception ex)
+            else
             {
-                throw ex;
+                var sql = "UPDATE Customers SET CustomerName=@CustomerName,CustomerEmail=@CustomerEmail,CustomerTel=@CustomerTel WHERE CustomerNic=@CustomerNic);" +
+                    "SELECT Id FROM Customer WHERE CustomerNic=@CustomerNic";
+                return _baseRepo.Select<int>(sql, customer).Single();
             }
-
         }
     }
 }

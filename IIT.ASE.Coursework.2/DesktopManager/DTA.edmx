@@ -28,8 +28,6 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="CustomerId" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="DeviceId" Type="int" Nullable="false" />
     <Property Name="CustomerNic" Type="nvarchar(max)" Nullable="false" />
     <Property Name="CustomerName" Type="nvarchar(max)" Nullable="false" />
     <Property Name="CustomerEmail" Type="nvarchar(max)" Nullable="false" />
@@ -129,8 +127,6 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CustomerId" Type="String" Nullable="false" />
-          <Property Name="DeviceId" Type="Int32" Nullable="false" />
           <Property Name="CustomerNic" Type="String" Nullable="false" />
           <Property Name="CustomerName" Type="String" Nullable="false" />
           <Property Name="CustomerEmail" Type="String" Nullable="false" />
@@ -192,8 +188,6 @@
       <EntityTypeMapping TypeName="IsTypeOf(DTA.Customer)">
         <MappingFragment StoreEntitySet="Customers">
           <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
-          <ScalarProperty Name="DeviceId" ColumnName="DeviceId" />
           <ScalarProperty Name="CustomerNic" ColumnName="CustomerNic" />
           <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
           <ScalarProperty Name="CustomerEmail" ColumnName="CustomerEmail" />

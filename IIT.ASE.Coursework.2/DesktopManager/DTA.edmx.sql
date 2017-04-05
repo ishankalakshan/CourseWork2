@@ -2,8 +2,8 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 04/04/2017 11:57:45
--- Generated from EDMX file: D:\121\MSc\CourseWork2\IIT.ASE.Coursework.2\DesktopManager\DTA.edmx
+-- Date Created: 04/05/2017 23:23:36
+-- Generated from EDMX file: I:\MSc\Enterprise Development\Coursework _2\CourseWork2\IIT.ASE.Coursework.2\DesktopManager\DTA.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
@@ -51,8 +51,6 @@ GO
 -- Creating table 'Customers'
 CREATE TABLE [dbo].[Customers] (
     [Id] int IDENTITY(1,1) NOT NULL,
-    [CustomerId] nvarchar(max)  NOT NULL,
-    [DeviceId] int  NOT NULL,
     [CustomerNic] nvarchar(max)  NOT NULL,
     [CustomerName] nvarchar(max)  NOT NULL,
     [CustomerEmail] nvarchar(max)  NOT NULL,

@@ -29,5 +29,11 @@ namespace TabApplication.DataRepository
             const string sql = "SELECT * FROM Seat";
             return _baseRepository.Select<Seat>(sql).Count>0;
         }
+
+        public void UpdateSeatStatusInLocalFromRemote(IList<Seat> seats)
+        {
+            const string sql = "UPDATE Seat SET SeatStatusId=@SeatStatusId WHERE SeatId=@SeatId";
+             _baseRepository.ExecuteScaler(sql, seats);
+        }
     }
 }

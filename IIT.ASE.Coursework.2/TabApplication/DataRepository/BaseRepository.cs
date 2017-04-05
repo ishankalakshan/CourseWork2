@@ -89,7 +89,7 @@ namespace TabApplication.DataRepository
             }            
         }
 
-        public void ExecuteScaler(string sql, object parameters)
+        public void ExecuteScaler(string sql, object parameters=null)
         {
             using (var db = GetDbContextLocal())
             {

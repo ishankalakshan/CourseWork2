@@ -20,14 +20,15 @@ namespace TabApplication.Forms
         {
             InitializeComponent();
             _seatService = new SeatService();
-            InitializeData();
+            InitializeDataAsync();
         }
 
-        public void InitializeData()
+        public async Task InitializeDataAsync()
         {
             _seatService.CreateDbIfNotExists();
             SeedInitialSeatData();
             UpdateSeatStatus();
+            await UpdateSeatsinLocalDbAsync();
         }
 
         private void SeedInitialSeatData()
@@ -82,6 +83,8 @@ namespace TabApplication.Forms
             var seatId = Convert.ToInt32(button.Name.Substring(button.Name.LastIndexOf('_') + 1));
             MessageBox.Show(seatId.ToString());
 
+
+
             var res = testmethod();
         }
 
@@ -94,28 +97,34 @@ namespace TabApplication.Forms
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
                 ////GET Method  
-                //HttpResponseMessage response = await client.GetAsync("api/test");
+                //HttpResponseMessage response = await client.GetAsync("api/GetSeatStatus");
                 //if (response.IsSuccessStatusCode)
                 //{
-                //    var department = response.Content.ReadAsStringAsync(); ;
+                //    var department = response.Content.ReadAsAsync<IList<Seat>>();
 
                 //}
                 //else
                 //{
-                //    Console.WriteLine("Internal server Error");
+                //    MessageBox.Show("Internal server Error");
                 //}
                 var customer = new List<Customer>();
-                customer.Add(new Customer() {CustomerId=1,CustomerEmail="asdgkjashd",CustomerName="ishanka",CustomerNic="adas",CustomerTel="0988787"});
-                HttpResponseMessage response = await client.PostAsJsonAsync("api/GetCustomers", customer);
+                customer.Add(new Customer() { CustomerId = 1, CustomerEmail = "asdgkjashd", CustomerName = "ishanka", CustomerNic = "adas", CustomerTel = "0988787" });
+                var a = new Customer() { CustomerNic = "912701395v", CustomerEmail = "123qweaasd", CustomerName = "Ishanka", CustomerTel = "123123" };
+                HttpResponseMessage response = await client.PostAsJsonAsync("api/InsertOrUpdateCustomer", a);
 
                 if (response.IsSuccessStatusCode)
                 {
                     // Get the URI of the created resource.  
                     Uri returnUrl = response.Headers.Location;
+                    var department = response.Content.ReadAsAsync<int>();
                     Console.WriteLine(returnUrl);
                 }
             }
         }
 
+        private async Task UpdateSeatsinLocalDbAsync()
+        {
+            await _seatService.UpdateSeatStatusInLocalFromRemoteAsync();
+        }
     }
 }
