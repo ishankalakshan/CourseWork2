@@ -1,4 +1,4 @@
-﻿namespace IitStagecraftRemoteWebApi.Models
+﻿namespace IitStagecraftRemoteWebApi.Models { 
     public class Seat
     {
         public int Id { get; set; }

@@ -2,6 +2,7 @@
 using System;
 using System.Web.Http;
 using IitStagecraftRemoteWebApi.Models;
+using System.Collections.Generic;
 
 namespace IitStagecraftRemoteWebApi.Controllers
 {
@@ -9,9 +10,9 @@ namespace IitStagecraftRemoteWebApi.Controllers
     {
         private BaseRepository _baseRepo = new BaseRepository();
 
-        [HttpGet]
+        [HttpPost]
         [Route("api/GetCustomers")]
-        public string GetCustomer(string sql,string customerNic)
+        public string GetCustomer(List<Customer> customer)
         {
             var res = _baseRepo.Select<Seat>("Select * from Seats");
             try

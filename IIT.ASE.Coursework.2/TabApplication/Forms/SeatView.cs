@@ -89,20 +89,30 @@ namespace TabApplication.Forms
         {
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("http://iitstagecraftremotewebapi.azurewebsites.net");
+                client.BaseAddress = new Uri("http://localhost:35903"); //http://iitstagecraftremotewebapi.azurewebsites.net
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                //GET Method  
-                HttpResponseMessage response = await client.GetAsync("api/test");
+                ////GET Method  
+                //HttpResponseMessage response = await client.GetAsync("api/test");
+                //if (response.IsSuccessStatusCode)
+                //{
+                //    var department = response.Content.ReadAsStringAsync(); ;
+
+                //}
+                //else
+                //{
+                //    Console.WriteLine("Internal server Error");
+                //}
+                var customer = new List<Customer>();
+                customer.Add(new Customer() {CustomerId=1,CustomerEmail="asdgkjashd",CustomerName="ishanka",CustomerNic="adas",CustomerTel="0988787"});
+                HttpResponseMessage response = await client.PostAsJsonAsync("api/GetCustomers", customer);
+
                 if (response.IsSuccessStatusCode)
                 {
-                    var department = response.Content.ReadAsStringAsync(); ;
-
-                }
-                else
-                {
-                    Console.WriteLine("Internal server Error");
+                    // Get the URI of the created resource.  
+                    Uri returnUrl = response.Headers.Location;
+                    Console.WriteLine(returnUrl);
                 }
             }
         }

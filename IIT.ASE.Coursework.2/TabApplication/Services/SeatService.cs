@@ -28,6 +28,11 @@ namespace TabApplication.Services
             return _seatRepository.UpdateSeatStatusFromLocal();
         }
 
+        //public IList<Seat> UpdateSeatStatusInLocalFromRemote()
+        //{
+
+        //}
+
         public void LoadSeatsToLocalIfNotExists(List<Seat> seats)
         {
             var exists = _seatRepository.IsInitialSeatDataPresentInLocal();
