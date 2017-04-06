@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace IitStagecraftRemoteWebApi.Controllers
 {
-    public class CustomerController : ApiController
+    public class BookingController : ApiController
     {
         private BaseRepository _baseRepo = new BaseRepository();
 
@@ -28,6 +28,11 @@ namespace IitStagecraftRemoteWebApi.Controllers
                     "SELECT Id FROM Customer WHERE CustomerNic=@CustomerNic";
                 return _baseRepo.Select<int>(sql, customer).Single();
             }
+        }
+
+        public void InsertBooking()
+        {
+            
         }
     }
 }
