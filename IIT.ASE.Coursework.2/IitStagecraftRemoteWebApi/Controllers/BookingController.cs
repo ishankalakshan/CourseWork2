@@ -30,9 +30,15 @@ namespace IitStagecraftRemoteWebApi.Controllers
             }
         }
 
-        public void InsertBooking()
+        public void InsertBooking(Booking booking)
         {
             
         }
+
+        public void GetBookingUpdates(IList<BookingUpdate> bookingList)
+        {
+            
+        }
+
     }
 }
