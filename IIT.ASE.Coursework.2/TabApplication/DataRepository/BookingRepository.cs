@@ -26,7 +26,7 @@ namespace TabApplication.DataRepository
             return _baseRepository.InsertSingle(sql, booking, true);
         }
 
-        public IList<Customer> SelectCustomer(string CustomerNic,bool local=true)
+        public IList<Customer> SelectCustomerByNic(string CustomerNic,bool local=true)
         {
             const string sql = "SELECT * FROM Customer WHERE CustomerNic=@CustomerNic";
 

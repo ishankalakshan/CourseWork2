@@ -41,7 +41,7 @@ namespace TabApplication.Services
                 if (response.IsSuccessStatusCode)
                 {
                     var result= await response.Content.ReadAsAsync<IList<Seat>>();
-                    //_seatRepository.UpdateSeatStatusInLocalFromRemote(result);
+                    _seatRepository.UpdateSeatStatusInLocalFromRemote(result);
                     UpdateSeatStatusFromLocal();
                 }
                 else

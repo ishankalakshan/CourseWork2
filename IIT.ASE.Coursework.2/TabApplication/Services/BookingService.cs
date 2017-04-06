@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using TabApplication.DataRepository;
 using TabApplication.Models;
 using TabApplication.Utility;
@@ -13,23 +14,24 @@ namespace TabApplication.Services
             _bookingRepository = new BookingRepository();
         }
 
-        public bool InsertCustomer(Customer customer)
+        public int InsertCustomer(Customer customer)
         {
-            if (CheckWhetherUserExistsInLocal(customer))
+            var check = CheckWhetherUserExistsInLocal(customer);
+            if (check!=0)
             {
-                return false;
+                return check;
             }
-            else
-            {             
-                _bookingRepository.InsertCustomerToLocal(customer);
-                return true;
-            }          
+            return _bookingRepository.InsertCustomerToLocal(customer);
         }
 
-        public bool CheckWhetherUserExistsInLocal(Customer customer)
+        public int CheckWhetherUserExistsInLocal(Customer customer)
         {
-            var result = _bookingRepository.SelectCustomer(customer.CustomerNic).Count;
-            return result > 0;
+            var result = _bookingRepository.SelectCustomerByNic(customer.CustomerNic);
+            if (result.Count>0)
+            {
+               return result.FirstOrDefault().CustomerId;
+            }
+            return 0;
         }
 
         public void InsertBookingToLocal(Booking booking)
@@ -39,7 +41,7 @@ namespace TabApplication.Services
 
         public bool CheckWhetherUserExistsInRemote(Customer customer)
         {
-            var result = _bookingRepository.SelectCustomer(customer.CustomerNic,false).Count;
+            var result = _bookingRepository.SelectCustomerByNic(customer.CustomerNic,false).Count;
             return result > 0;
         }
 
