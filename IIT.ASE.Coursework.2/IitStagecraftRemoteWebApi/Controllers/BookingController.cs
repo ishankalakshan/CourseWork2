@@ -32,12 +32,14 @@ namespace IitStagecraftRemoteWebApi.Controllers
 
         public void InsertBooking(Booking booking)
         {
-            
+            var sql = "INSERT INTO Bookings(BookingId,DeviceId,BookingStatus,Customer_Id,Employee_Id,Seat_Id) " +
+                      "VALUES(@BookingId,@DeviceId,@BookingStatus,@Customer_Id,@Employee_Id,@Seat_Id)";
         }
 
         public void GetBookingUpdates(IList<BookingUpdate> bookingList)
         {
-            
+            var sql = "SELECT * FROM Bookings WHERE BookingId=@BookingId AND DeviceId=@DeviceId";
+            _baseRepo.Select<BookingUpdate>(sql, bookingList);
         }
 
     }

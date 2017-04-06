@@ -25,39 +25,63 @@ namespace TabApplication.Forms
 
         public async Task InitializeDataAsync()
         {
-            _seatService.CreateDbIfNotExists();
-            SeedInitialSeatData();
-            UpdateSeatStatus();
-            await UpdateSeatsinLocalDbAsync();
+            try
+            {
+                _seatService.CreateDbIfNotExists();
+                SeedInitialSeatData();
+                UpdateSeatStatus();
+                await UpdateSeatsinLocalDbAsync();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }           
         }
 
         private void SeedInitialSeatData()
         {
-            var seatObjs = new List<Seat>();
-            var seats = gbSeatPlan.Controls.OfType<Button>();
-            foreach (var seat in seats)
+            try
             {
-                var seatId = Convert.ToInt32(seat.Name.Substring(seat.Name.LastIndexOf('_') + 1));
-                seatObjs.Add(new Seat(){SeatId = seatId,SeatStatusId = 1});
+                var seatObjs = new List<Seat>();
+                var seats = gbSeatPlan.Controls.OfType<Button>();
+                foreach (var seat in seats)
+                {
+                    var seatId = Convert.ToInt32(seat.Name.Substring(seat.Name.LastIndexOf('_') + 1));
+                    seatObjs.Add(new Seat() { SeatId = seatId, SeatStatusId = 1 });
+                }
+                _seatService.LoadSeatsToLocalIfNotExists(seatObjs);
             }
-            _seatService.LoadSeatsToLocalIfNotExists(seatObjs);
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
 
         private void UpdateSeatStatus()
         {
-            var seatsButtons = gbSeatPlan.Controls.OfType<Button>();
-            var seats = _seatService.UpdateSeatStatusFromLocal();
-
-            foreach (var button in seatsButtons)
+            try
             {
-                var seatId = Convert.ToInt32(button.Name.Substring(button.Name.LastIndexOf('_') + 1));
-                foreach (var seat in seats)
+                var seatsButtons = gbSeatPlan.Controls.OfType<Button>();
+                var seats = _seatService.UpdateSeatStatusFromLocal();
+
+                foreach (var button in seatsButtons)
                 {
-                    if (seat.SeatId== seatId)
+                    var seatId = Convert.ToInt32(button.Name.Substring(button.Name.LastIndexOf('_') + 1));
+                    foreach (var seat in seats)
                     {
-                        UpdateButtonColor(button,seat);
+                        if (seat.SeatId == seatId)
+                        {
+                            UpdateButtonColor(button, seat);
+                        }
                     }
                 }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
             }
         }
 
