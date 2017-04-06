@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using TabApplication.DataRepository;
 using TabApplication.Models;
+using TabApplication.Utility;
 
 namespace TabApplication.Services
 {
@@ -40,6 +41,26 @@ namespace TabApplication.Services
         {
             var result = _bookingRepository.SelectCustomer(customer.CustomerNic,false).Count;
             return result > 0;
+        }
+
+        public IList<Booking> SelectPendingBookingsToRemote()
+        {
+            var bookingStatus = (int)StaticData.BookingStatusEnum.Pending;
+            var queryArgs = new
+            {
+                bookingStatus
+            };
+            var sql = "SELECT * FROM Booking WHERE BookingStatus=@bookingStatus AND Uploaded=false";
+            return _bookingRepository.Select<Booking>(sql,queryArgs);
+        }
+
+        public void UploadBookingsToRemote()
+        {
+            var tobeUpload = SelectPendingBookingsToRemote();
+            if (tobeUpload.Count>0)
+            {
+                //send the data to remote
+            }
         }
     }
 }
