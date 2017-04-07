@@ -20,7 +20,7 @@ namespace DesktopManager.Data_Repository
 
         public IList<CBookingCustomer> LoadBookings()
         {
-            var sql = "select Bookings.Id,Bookings.DeviceId,Bookings.BookingStatus,Customers.CustomerName," +
+            var sql = "select Bookings.Id as BookingId,Bookings.DeviceId,Bookings.BookingStatus,Customers.CustomerName," +
                 "customers.customernic,customers.CustomerEmail,customers.Customertel," +
                 "seats.seatid " +
                 "from Bookings " +

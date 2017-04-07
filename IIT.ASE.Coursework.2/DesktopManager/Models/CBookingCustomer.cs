@@ -18,5 +18,29 @@ namespace DesktopManager.Models
         public string CustomerName { get; set; }
         public string CustomerEmail { get; set; }
         public string CustomerTel { get; set; }
+
+        public string StatusName
+        {
+            get
+            {
+                if (BookingStatus==1)
+                {
+                    return "Pending";
+                }
+                if (BookingStatus == 2)
+                {
+                    return "Pending";
+                }
+                if (BookingStatus == 3)
+                {
+                    return "Rejected";
+                }
+                if (BookingStatus == 4)
+                {
+                    return "Cancelled";
+                }
+                return "Pending";
+            }
+        }
     }
 }

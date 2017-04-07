@@ -29,22 +29,73 @@
         private void InitializeComponent()
         {
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.BookingId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CustomerName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.NIC = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Telephone = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Seat = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Status = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(103, 93);
+            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.BookingId,
+            this.CustomerName,
+            this.NIC,
+            this.Telephone,
+            this.Seat,
+            this.Status});
+            this.dataGridView1.Location = new System.Drawing.Point(12, 31);
+            this.dataGridView1.MultiSelect = false;
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(240, 150);
+            this.dataGridView1.Size = new System.Drawing.Size(644, 202);
             this.dataGridView1.TabIndex = 0;
+            // 
+            // BookingId
+            // 
+            this.BookingId.DataPropertyName = "BookingId";
+            this.BookingId.HeaderText = "Id";
+            this.BookingId.Name = "BookingId";
+            // 
+            // CustomerName
+            // 
+            this.CustomerName.DataPropertyName = "customername";
+            this.CustomerName.HeaderText = "Name";
+            this.CustomerName.Name = "CustomerName";
+            // 
+            // NIC
+            // 
+            this.NIC.DataPropertyName = "customernic";
+            this.NIC.HeaderText = "NIC";
+            this.NIC.Name = "NIC";
+            // 
+            // Telephone
+            // 
+            this.Telephone.DataPropertyName = "customertel";
+            this.Telephone.HeaderText = "Mobile";
+            this.Telephone.Name = "Telephone";
+            // 
+            // Seat
+            // 
+            this.Seat.DataPropertyName = "seatid";
+            this.Seat.HeaderText = "Seat No";
+            this.Seat.Name = "Seat";
+            // 
+            // Status
+            // 
+            this.Status.DataPropertyName = "StatusName";
+            this.Status.HeaderText = "Status";
+            this.Status.Name = "Status";
             // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(508, 358);
+            this.AutoSize = true;
+            this.ClientSize = new System.Drawing.Size(673, 484);
             this.Controls.Add(this.dataGridView1);
             this.Name = "Main";
             this.Text = "Main";
@@ -56,5 +107,11 @@
         #endregion
 
         private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn BookingId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn CustomerName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn NIC;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Telephone;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Seat;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Status;
     }
 }
