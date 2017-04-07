@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using TabApplication.Models;
+using TabApplication.Models.Composite;
 
 namespace TabApplication.DataRepository
 {
@@ -38,5 +40,30 @@ namespace TabApplication.DataRepository
             return _baseRepository.Select<Customer>(sql,queryArgs,local);
         }
 
+        public void UpdateSeatStaus(int seatId,int seatStatus)
+        {
+            var queryArgs = new
+            {
+                seatId,seatStatus
+            };
+            var sql = "UPDATE Seat SET SeatStatusId=@seatStatus WHERE SeatId=@seatId";
+            _baseRepository.ExecuteScaler(sql, queryArgs);
+        }
+
+        public CBookingCustomer GetBookingInfo(int seatId)
+        {
+            var queryArgs = new
+            {
+                seatId
+            };
+            var sql = "SELECT * FROM Booking JOIN Customer ON Customer.CustomerId=Booking.CustomerId WHERE SeatId=@seatId";
+            return _baseRepository.Select<CBookingCustomer>(sql, queryArgs).FirstOrDefault();
+        }
+
+        public IList<CBookingCustomer> SelectPendingBookingsToRemote()
+        {
+            var sql = "SELECT * FROM Booking JOIN Customer ON Customer.CustomerId=Booking.CustomerId WHERE Uploaded=false";
+            return _baseRepository.Select<CBookingCustomer>(sql);
+        }
     }
 }

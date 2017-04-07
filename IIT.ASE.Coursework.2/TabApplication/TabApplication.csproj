@@ -85,6 +85,12 @@
     <Compile Include="Forms\BookingForm.Designer.cs">
       <DependentUpon>BookingForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\BookingInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\BookingInfo.Designer.cs">
+      <DependentUpon>BookingInfo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\SeatView.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -92,6 +98,7 @@
       <DependentUpon>SeatView.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Booking.cs" />
+    <Compile Include="Models\Composite\CBookingCustomer.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\Seat.cs" />
     <Compile Include="Program.cs" />
@@ -102,6 +109,9 @@
     <Compile Include="Utility\UtilityMethod.cs" />
     <EmbeddedResource Include="Forms\BookingForm.resx">
       <DependentUpon>BookingForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\BookingInfo.resx">
+      <DependentUpon>BookingInfo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\SeatView.resx">
       <DependentUpon>SeatView.cs</DependentUpon>

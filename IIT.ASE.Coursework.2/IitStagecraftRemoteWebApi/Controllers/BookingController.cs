@@ -11,8 +11,6 @@ namespace IitStagecraftRemoteWebApi.Controllers
     {
         private BaseRepository _baseRepo = new BaseRepository();
 
-        [HttpPost]
-        [Route("api/InsertOrUpdateCustomer")]
         public int InsertOrUpdateCustomer(Customer customer)
         {
             var res = _baseRepo.Select<Seat>("Select * from Customers WHERE CustomerNic=@CustomerNic", customer);
@@ -30,10 +28,15 @@ namespace IitStagecraftRemoteWebApi.Controllers
             }
         }
 
-        public void InsertBooking(Booking booking)
+        [HttpPost]
+        [Route("api/InsertBooking")]
+        public void InsertBooking(CBookingCustomer cbooking)
         {
+            var customer = new Customer() { CustomerNic = cbooking.CustomerNic, CustomerEmail = cbooking.CustomerEmail, CustomerName = cbooking.CustomerName, CustomerTel = cbooking.CustomerTel };
+            var customerId = InsertOrUpdateCustomer(customer);
             var sql = "INSERT INTO Bookings(BookingId,DeviceId,BookingStatus,Customer_Id,Employee_Id,Seat_Id) " +
                       "VALUES(@BookingId,@DeviceId,@BookingStatus,@Customer_Id,@Employee_Id,@Seat_Id)";
+
         }
 
         public void GetBookingUpdates(IList<BookingUpdate> bookingList)

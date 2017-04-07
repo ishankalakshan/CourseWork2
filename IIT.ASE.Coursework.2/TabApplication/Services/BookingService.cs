@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using TabApplication.DataRepository;
 using TabApplication.Models;
+using TabApplication.Models.Composite;
 using TabApplication.Utility;
 
 namespace TabApplication.Services
@@ -9,17 +11,19 @@ namespace TabApplication.Services
    public class BookingService
     {
         private readonly BookingRepository _bookingRepository;
+        private readonly BaseWebApiCall _baseWebApi;
         public BookingService()
         {
             _bookingRepository = new BookingRepository();
-        }
+            _baseWebApi = new BaseWebApiCall();
+    }
 
         public int InsertCustomer(Customer customer)
         {
-            var check = CheckWhetherUserExistsInLocal(customer);
-            if (check!=0)
+            var customerId = CheckWhetherUserExistsInLocal(customer);
+            if (customerId!=0)
             {
-                return check;
+                return customerId;
             }
             return _bookingRepository.InsertCustomerToLocal(customer);
         }
@@ -34,9 +38,11 @@ namespace TabApplication.Services
             return 0;
         }
 
-        public void InsertBookingToLocal(Booking booking)
+        public int InsertBookingToLocal(Booking booking)
         {
             var insertedBookingId = _bookingRepository.InsertBookingToLocal(booking);
+            _bookingRepository.UpdateSeatStaus(booking.SeatId, (int)StaticData.SeatStatusEnum.Pending);
+            return insertedBookingId;
         }
 
         public bool CheckWhetherUserExistsInRemote(Customer customer)
@@ -45,24 +51,32 @@ namespace TabApplication.Services
             return result > 0;
         }
 
-        public IList<Booking> SelectPendingBookingsToRemote()
+        public async System.Threading.Tasks.Task UploadBookingsToRemoteAsync()
         {
-            var bookingStatus = (int)StaticData.BookingStatusEnum.Pending;
-            var queryArgs = new
+            var tobeUpload = _bookingRepository.SelectPendingBookingsToRemote();
+            if (tobeUpload.Count > 0)
             {
-                bookingStatus
-            };
-            var sql = "SELECT * FROM Booking WHERE BookingStatus=@bookingStatus AND Uploaded=false";
-            return _bookingRepository.Select<Booking>(sql,queryArgs);
+                foreach (var item in tobeUpload)
+                {
+                    
+                    using (var client = _baseWebApi.CreateHttpClient())
+                    {
+                        var response = await client.PostAsJsonAsync("api/InsertOrUpdateCustomer", customer);
+                        if (response.IsSuccessStatusCode)
+                        {
+                            var result = await response.Content.ReadAsAsync<int>();
+                            
+                           
+                        }                       
+                    }
+
+                }
+            }
         }
 
-        public void UploadBookingsToRemote()
+        public CBookingCustomer SelectBookingBySeatId(int seatId)
         {
-            var tobeUpload = SelectPendingBookingsToRemote();
-            if (tobeUpload.Count>0)
-            {
-                //send the data to remote
-            }
+            return _bookingRepository.GetBookingInfo(seatId);
         }
     }
 }

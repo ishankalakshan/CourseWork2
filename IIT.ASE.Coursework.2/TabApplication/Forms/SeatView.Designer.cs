@@ -49,6 +49,7 @@
             this.seatId_111 = new System.Windows.Forms.Button();
             this.seatId_101 = new System.Windows.Forms.Button();
             this.seatId_100 = new System.Windows.Forms.Button();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.gbSeatPlan.SuspendLayout();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -274,11 +275,15 @@
             this.seatId_100.UseVisualStyleBackColor = true;
             this.seatId_100.Click += new System.EventHandler(this.OnSeatClickAsync);
             // 
+            // backgroundWorker1
+            // 
+            this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
+            // 
             // SeatView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.Gainsboro;
+            this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(584, 661);
             this.Controls.Add(this.gbSeatPlan);
             this.Name = "SeatView";
@@ -313,5 +318,6 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
     }
 }

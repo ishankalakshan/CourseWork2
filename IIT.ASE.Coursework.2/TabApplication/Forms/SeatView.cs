@@ -15,28 +15,48 @@ namespace TabApplication.Forms
     public partial class SeatView : Form
     {
         private readonly SeatService _seatService;
+        public delegate void SendSeat(object obj, EventArgs e);
+        public event SendSeat OnSendMessage;
 
         public SeatView()
         {
             InitializeComponent();
             _seatService = new SeatService();
-            InitializeDataAsync();
+            InitializeData();
         }
 
-        public async Task InitializeDataAsync()
+        private void LoadBookingForm(int seatId)
+        {
+            var child = new BookingForm();
+            OnSendMessage += child.MessageReceived;
+            child.Show();
+
+            OnSendMessage?.Invoke(seatId, null);
+        }
+
+        private void LoadBookingInfoForm(int seatId)
+        {
+            var child = new BookingInfo();
+            OnSendMessage += child.MessageReceived;
+            child.Show();
+
+            OnSendMessage?.Invoke(seatId, null);
+        }
+
+        public void InitializeData()
         {
             try
             {
                 _seatService.CreateDbIfNotExists();
                 SeedInitialSeatData();
                 UpdateSeatStatus();
-                await UpdateSeatsinLocalDbAsync();
+                //await UpdateSeatsinLocalDbAsync();
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
                 throw;
-            }           
+            }
         }
 
         private void SeedInitialSeatData()
@@ -105,11 +125,17 @@ namespace TabApplication.Forms
         {
             var button = (Button)sender;
             var seatId = Convert.ToInt32(button.Name.Substring(button.Name.LastIndexOf('_') + 1));
-            MessageBox.Show(seatId.ToString());
+            //MessageBox.Show(seatId.ToString());
 
-
-
-            var res = testmethod();
+            if (button.BackColor==Color.Lime)
+            {
+                LoadBookingForm(seatId);
+            }
+            else
+            {
+                LoadBookingInfoForm(seatId);
+            }                     
+            //var res = testmethod();
         }
 
         private async Task testmethod()
@@ -149,6 +175,26 @@ namespace TabApplication.Forms
         private async Task UpdateSeatsinLocalDbAsync()
         {
             await _seatService.UpdateSeatStatusInLocalFromRemoteAsync();
+        }
+
+        public void SeatReceived(object sender, EventArgs e)
+        {
+            var seatId = (int)sender;
+
+            var seatsButtons = gbSeatPlan.Controls.OfType<Button>();
+
+            foreach (var seat in seatsButtons)
+            {
+                if (seat.Name=="SeatId_"+seatId)
+                {
+                    UpdateButtonColor(seat, new Seat() { SeatStatusId = (int)StaticData.SeatStatusEnum.Pending });
+                }
+            }
+        }
+
+        private void backgroundWorker1_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
+        {
+
         }
     }
 }
