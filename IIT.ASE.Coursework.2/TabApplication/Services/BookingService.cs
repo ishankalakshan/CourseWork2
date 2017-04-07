@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using TabApplication.DataRepository;
@@ -53,25 +54,33 @@ namespace TabApplication.Services
 
         public async System.Threading.Tasks.Task UploadBookingsToRemoteAsync()
         {
-            var tobeUpload = _bookingRepository.SelectPendingBookingsToRemote();
-            if (tobeUpload.Count > 0)
+            try
             {
-                foreach (var item in tobeUpload)
+                var tobeUpload = _bookingRepository.SelectPendingBookingsToRemote();
+                if (tobeUpload.Count > 0)
                 {
-                    
                     using (var client = _baseWebApi.CreateHttpClient())
                     {
-                        var response = await client.PostAsJsonAsync("api/InsertOrUpdateCustomer", customer);
+                        var response = await client.PostAsJsonAsync("api/InsertBooking", tobeUpload);
                         if (response.IsSuccessStatusCode)
                         {
-                            var result = await response.Content.ReadAsAsync<int>();
-                            
-                           
-                        }                       
+                            var result = await response.Content.ReadAsAsync<List<int>>();
+                            UpdateUploadStatus(result);
+                        }
                     }
-
                 }
             }
+            catch (System.Exception e)
+            {
+
+                throw e;
+            }
+            
+        }
+
+        public void UpdateUploadStatus(IList<int> ids)
+        {
+            _bookingRepository.UpdateUploadStatus(ids);
         }
 
         public CBookingCustomer SelectBookingBySeatId(int seatId)

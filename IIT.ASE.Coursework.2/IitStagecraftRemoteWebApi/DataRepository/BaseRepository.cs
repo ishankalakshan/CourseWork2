@@ -20,5 +20,14 @@ namespace IitStagecraftRemoteWebApi.DataRepository
                     return result.ToList();
                 }
         }
+
+        public int Insert(string sql, object parameters = null)
+        {
+            using (var db = OpenDbConnection())
+            {
+                var result = db.Execute(sql, parameters);
+                return result;
+            }
+        }
     }
 }

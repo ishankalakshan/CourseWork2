@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 04/05/2017 23:23:36
+-- Date Created: 04/07/2017 16:36:00
 -- Generated from EDMX file: I:\MSc\Enterprise Development\Coursework _2\CourseWork2\IIT.ASE.Coursework.2\DesktopManager\DTA.edmx
 -- --------------------------------------------------
 
@@ -20,9 +20,6 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_BookingCustomer]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Bookings] DROP CONSTRAINT [FK_BookingCustomer];
 GO
-IF OBJECT_ID(N'[dbo].[FK_BookingEmployee]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Bookings] DROP CONSTRAINT [FK_BookingEmployee];
-GO
 IF OBJECT_ID(N'[dbo].[FK_BookingSeat]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Bookings] DROP CONSTRAINT [FK_BookingSeat];
 GO
@@ -39,9 +36,6 @@ IF OBJECT_ID(N'[dbo].[Bookings]', 'U') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[Seats]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Seats];
-GO
-IF OBJECT_ID(N'[dbo].[Employees]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Employees];
 GO
 
 -- --------------------------------------------------
@@ -62,10 +56,9 @@ GO
 CREATE TABLE [dbo].[Bookings] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [BookingId] smallint  NOT NULL,
-    [DeviceId] int  NOT NULL,
+    [DeviceId] nvarchar(max)  NOT NULL,
     [BookingStatus] smallint  NOT NULL,
     [Customer_Id] int  NOT NULL,
-    [Employee_Id] int  NOT NULL,
     [Seat_Id] int  NOT NULL
 );
 GO
@@ -75,17 +68,6 @@ CREATE TABLE [dbo].[Seats] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [SeatId] nvarchar(max)  NOT NULL,
     [SeatStatusId] int  NOT NULL
-);
-GO
-
--- Creating table 'Employees'
-CREATE TABLE [dbo].[Employees] (
-    [Id] int IDENTITY(1,1) NOT NULL,
-    [EmployeeName] nvarchar(max)  NOT NULL,
-    [EmployeeUsername] nvarchar(max)  NOT NULL,
-    [EmployeePassword] nvarchar(max)  NOT NULL,
-    [HasDtaAccess] bit  NOT NULL,
-    [HasTabAccess] bit  NOT NULL
 );
 GO
 
@@ -111,12 +93,6 @@ ADD CONSTRAINT [PK_Seats]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
--- Creating primary key on [Id] in table 'Employees'
-ALTER TABLE [dbo].[Employees]
-ADD CONSTRAINT [PK_Employees]
-    PRIMARY KEY CLUSTERED ([Id] ASC);
-GO
-
 -- --------------------------------------------------
 -- Creating all FOREIGN KEY constraints
 -- --------------------------------------------------
@@ -134,21 +110,6 @@ GO
 CREATE INDEX [IX_FK_BookingCustomer]
 ON [dbo].[Bookings]
     ([Customer_Id]);
-GO
-
--- Creating foreign key on [Employee_Id] in table 'Bookings'
-ALTER TABLE [dbo].[Bookings]
-ADD CONSTRAINT [FK_BookingEmployee]
-    FOREIGN KEY ([Employee_Id])
-    REFERENCES [dbo].[Employees]
-        ([Id])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
-
--- Creating non-clustered index for FOREIGN KEY 'FK_BookingEmployee'
-CREATE INDEX [IX_FK_BookingEmployee]
-ON [dbo].[Bookings]
-    ([Employee_Id]);
 GO
 
 -- Creating foreign key on [Seat_Id] in table 'Bookings'

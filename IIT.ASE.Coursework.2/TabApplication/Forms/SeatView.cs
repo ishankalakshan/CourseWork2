@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TabApplication.Models;
@@ -15,6 +17,7 @@ namespace TabApplication.Forms
     public partial class SeatView : Form
     {
         private readonly SeatService _seatService;
+        private readonly BookingService _bookingService;
         public delegate void SendSeat(object obj, EventArgs e);
         public event SendSeat OnSendMessage;
 
@@ -22,7 +25,9 @@ namespace TabApplication.Forms
         {
             InitializeComponent();
             _seatService = new SeatService();
+            _bookingService = new BookingService();
             InitializeData();
+            backgroundWorker1.RunWorkerAsync();
         }
 
         private void LoadBookingForm(int seatId)
@@ -50,7 +55,6 @@ namespace TabApplication.Forms
                 _seatService.CreateDbIfNotExists();
                 SeedInitialSeatData();
                 UpdateSeatStatus();
-                //await UpdateSeatsinLocalDbAsync();
             }
             catch (Exception e)
             {
@@ -194,7 +198,13 @@ namespace TabApplication.Forms
 
         private void backgroundWorker1_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
         {
-
+            var i = 1;
+            while (true)
+            {
+                _bookingService.UploadBookingsToRemoteAsync();
+                Thread.Sleep(1200000);
+            }
+            
         }
     }
 }

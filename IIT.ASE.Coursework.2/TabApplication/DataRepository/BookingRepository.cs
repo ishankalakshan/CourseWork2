@@ -62,8 +62,24 @@ namespace TabApplication.DataRepository
 
         public IList<CBookingCustomer> SelectPendingBookingsToRemote()
         {
-            var sql = "SELECT * FROM Booking JOIN Customer ON Customer.CustomerId=Booking.CustomerId WHERE Uploaded=false";
-            return _baseRepository.Select<CBookingCustomer>(sql);
+            var uploaded = false;
+            var queryArgs = new
+            {
+                uploaded
+            };
+            var sql = "SELECT * FROM Booking JOIN Customer ON Customer.CustomerId=Booking.CustomerId WHERE Uploaded=@uploaded";
+            return _baseRepository.Select<CBookingCustomer>(sql,queryArgs);
+        }
+
+        public void UpdateUploadStatus(IList<int> bookingids)
+        {
+            var uploaded = true;
+            var queryArgs = new
+            {
+                uploaded
+            };
+            var sql = "UPDATE Booking SET Uploaded=@uploaded WHERE BookingId IN(" + string.Join(",", bookingids.ToArray()) + ");";
+            _baseRepository.ExecuteScaler(sql,queryArgs);
         }
     }
 }
