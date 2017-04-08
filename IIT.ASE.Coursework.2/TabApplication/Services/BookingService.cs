@@ -110,5 +110,37 @@ namespace TabApplication.Services
         {
             return _bookingRepository.GetBookingInfo(seatId);
         }
+
+        public async System.Threading.Tasks.Task<Customer> SearchForCustomerNicAsync(string Nic)
+        {
+            var result = _bookingRepository.SelectCustomerByNic(Nic);
+            if (false)
+            {
+                return result.FirstOrDefault();
+            }
+            else
+            {
+                using (var client = _baseWebApi.CreateHttpClient())
+                {
+                    var response = await client.PostAsJsonAsync("api/GetCustomer", Nic);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        if (response.Content!=null)
+                        {
+                            return await response.Content.ReadAsAsync<Customer>();
+                        }
+                        else
+                        {
+                            return null;
+                        }
+                        
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+            }
+        }
     }
 }

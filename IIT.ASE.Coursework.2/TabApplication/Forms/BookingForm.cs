@@ -93,5 +93,20 @@ namespace TabApplication.Forms
             }
             return true;
         }
+
+        private async void btnSearch_Click(object sender, EventArgs e)
+        {
+            var result = await _bookingService.SearchForCustomerNicAsync(txtNic.Text.Trim().ToLower());
+            if (result!=null)
+            {
+                txtEmail.Text = result.CustomerEmail;
+                txtMobile.Text = result.CustomerTel;
+                txtName.Text = result.CustomerName;
+            }
+            else
+            {
+                MessageBox.Show("No record found", "Search complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
     }
 }

@@ -13,7 +13,7 @@ namespace IitStagecraftRemoteWebApi.Controllers
 
         private int InsertOrUpdateCustomer(Customer customer)
         {
-            var res = _baseRepo.Select<Seat>("Select * from Customers WHERE CustomerNic=@CustomerNic", customer);
+            var res = _baseRepo.Select<Customer>("Select * from Customers WHERE CustomerNic=@CustomerNic", customer);
             if (res.Count == 0)
             {
                 var sql = "INSERT INTO Customers(CustomerNic,CustomerName,CustomerEmail,CustomerTel)" +
@@ -58,11 +58,11 @@ namespace IitStagecraftRemoteWebApi.Controllers
                     //if there are not pending bookings and seat is available reserve the seat
                     if (noPendingBookinsForSeat && isSeatAvailable)
                     {
-                        ReserveSeatAndUpdateBookingStatus(selectedseat, insertedBookingId,(int)StaticData.BookingStatusEnum.Accepted,(int)StaticData.SeatStatusEnum.Reserved);
+                        ReserveSeatAndUpdateBookingStatus(selectedseat, insertedBookingId, (int)StaticData.BookingStatusEnum.Accepted, (int)StaticData.SeatStatusEnum.Reserved);
                     }
-                    else if(!isSeatAvailable)
+                    else if (!isSeatAvailable)
                     {
-                        ReserveSeatAndUpdateBookingStatus(selectedseat, insertedBookingId,(int)StaticData.BookingStatusEnum.Rejected, (int)StaticData.SeatStatusEnum.Reserved);
+                        ReserveSeatAndUpdateBookingStatus(selectedseat, insertedBookingId, (int)StaticData.BookingStatusEnum.Rejected, (int)StaticData.SeatStatusEnum.Reserved);
                     }
                 }
                 //get the updated booking details
@@ -73,8 +73,29 @@ namespace IitStagecraftRemoteWebApi.Controllers
             {
                 throw ex;
             }
-            
 
+
+        }
+
+        [HttpPost]
+        [Route("api/GetCustomer")]
+        public Customer SearchCustomer([FromBody] string Nic)
+        {
+            var queryargs = new
+            {
+                Nic
+            };
+
+            var result = _baseRepo.Select<Customer>("select * from customers where customernic=@Nic", queryargs);
+
+            if (result.Count>0)
+            {
+                return result.Single();
+            }
+            else
+            {
+                return null;
+            }
         }
 
         private bool GetPendingBookingsForSeat(Seat selectedseat)

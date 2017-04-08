@@ -28,6 +28,7 @@ namespace TabApplication.Forms
             _bookingService = new BookingService();
             InitializeData();
             backgroundWorker1.RunWorkerAsync();
+            UpdateSeatWorker.RunWorkerAsync();
         }
 
         private void LoadBookingForm(int seatId)
@@ -216,6 +217,15 @@ namespace TabApplication.Forms
         private void button1_Click(object sender, EventArgs e)
         {
             UpdateSeatStatus();
+        }
+
+        private void UpdateSeatWorker_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
+        {
+            while (true)
+            {
+                UpdateSeatStatus();
+                Thread.Sleep(120000);
+            }
         }
     }
 }
