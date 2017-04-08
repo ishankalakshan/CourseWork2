@@ -96,5 +96,13 @@ namespace TabApplication.DataRepository
                 db.ExecuteScalar(sql, parameters);
             }
         }
+
+        public void Update(string sql, object parameters = null)
+        {
+            using (var db = GetDbContextLocal())
+            {
+                var result = db.Execute(sql, parameters);
+            }
+        }
     }
 }

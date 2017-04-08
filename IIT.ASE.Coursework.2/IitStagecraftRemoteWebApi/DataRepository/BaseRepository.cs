@@ -21,7 +21,16 @@ namespace IitStagecraftRemoteWebApi.DataRepository
                 }
         }
 
-        public int Insert(string sql, object parameters = null)
+        public void Update<T>(string sql, object parameters = null)
+        {
+            using (var db = OpenDbConnection())
+            {
+                var result = db.Query<T>(sql, parameters);
+            }
+        }
+
+        //returns affected number of rows
+        public int Execute(string sql, object parameters = null)
         {
             using (var db = OpenDbConnection())
             {

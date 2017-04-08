@@ -64,8 +64,8 @@ namespace TabApplication.Services
                         var response = await client.PostAsJsonAsync("api/InsertBooking", tobeUpload);
                         if (response.IsSuccessStatusCode)
                         {
-                            var result = await response.Content.ReadAsAsync<List<int>>();
-                            UpdateUploadStatus(result);
+                            var result = await response.Content.ReadAsAsync<IList<Booking>>();
+                            UpdateBookingStatusAndSeatStatus(result);                           
                         }
                     }
                 }
@@ -78,9 +78,32 @@ namespace TabApplication.Services
             
         }
 
-        public void UpdateUploadStatus(IList<int> ids)
+        public void UpdateBookingStatusAndSeatStatus(IList<Booking> bookings)
         {
-            _bookingRepository.UpdateUploadStatus(ids);
+            var seats = new List<Seat>();
+            _bookingRepository.UpdateBookingStatus(bookings);
+
+            foreach (var item in bookings)
+            {
+                if (item.BookingStatus==(int)StaticData.BookingStatusEnum.Accepted)
+                {
+                    seats.Add(new Seat() { SeatId = item.SeatId, SeatStatusId = (int)StaticData.SeatStatusEnum.Reserved });
+                }
+                if (item.BookingStatus == (int)StaticData.BookingStatusEnum.Pending)
+                {
+                    seats.Add(new Seat() { SeatId = item.SeatId, SeatStatusId = (int)StaticData.SeatStatusEnum.Pending });
+                }
+                if (item.BookingStatus == (int)StaticData.BookingStatusEnum.Rejected)
+                {
+                    seats.Add(new Seat() { SeatId = item.SeatId, SeatStatusId = (int)StaticData.SeatStatusEnum.Reserved });
+                }
+                if (item.BookingStatus == (int)StaticData.BookingStatusEnum.Cancelled)
+                {
+                    seats.Add(new Seat() { SeatId = item.SeatId, SeatStatusId = (int)StaticData.SeatStatusEnum.Available });
+                }
+            }
+
+            _bookingRepository.UpdateSeatStatus(seats);
         }
 
         public CBookingCustomer SelectBookingBySeatId(int seatId)

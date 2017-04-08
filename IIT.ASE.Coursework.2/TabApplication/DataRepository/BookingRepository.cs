@@ -81,5 +81,18 @@ namespace TabApplication.DataRepository
             var sql = "UPDATE Booking SET Uploaded=@uploaded WHERE BookingId IN(" + string.Join(",", bookingids.ToArray()) + ");";
             _baseRepository.ExecuteScaler(sql,queryArgs);
         }
+
+        public void UpdateBookingStatus(IList<Booking> bookings)
+        {
+            var sql = "UPDATE Booking SET BookingStatus=@BookingStatus,Uploaded=1 WHERE BookingId=@BookingId;";         
+            _baseRepository.Update(sql, bookings);
+            
+        }
+
+        public void UpdateSeatStatus(IList<Seat> seats)
+        {
+            var sql2 = "UPDATE Seat SET SeatStatusId=@SeatStatusId WHERE SeatId=@seatId";
+            _baseRepository.Update(sql2, seats);
+        }
     }
 }

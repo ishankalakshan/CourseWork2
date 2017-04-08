@@ -198,13 +198,24 @@ namespace TabApplication.Forms
 
         private void backgroundWorker1_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
         {
-            var i = 1;
-            while (true)
+            try
             {
-                _bookingService.UploadBookingsToRemoteAsync();
-                Thread.Sleep(1200000);
+                var i = 1;
+                while (true)
+                {
+                    _bookingService.UploadBookingsToRemoteAsync();
+                    Thread.Sleep(600000);
+                }
             }
-            
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message); 
+            }                       
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            UpdateSeatStatus();
         }
     }
 }
