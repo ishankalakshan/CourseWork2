@@ -23,7 +23,10 @@ namespace TabApplication.Forms
 
         private void btnSubmit_Click(object sender, System.EventArgs e)
         {
-            CreateBooking();
+            if (Validate())
+            {
+                CreateBooking();
+            }       
         }
 
         private void CreateBooking()
@@ -31,7 +34,7 @@ namespace TabApplication.Forms
             //var b =new Customer() {CustomerNic="912701397v",CustomerName="ishanka",CustomerTel="0716405220",CustomerEmail="Isankalakshan@gmail.com" };
             var customer = CreateCustomer();
             var localInsertedCustomerId = _bookingService.InsertCustomer(customer);
-            var booking = new Booking() { BookingStatus = (int)StaticData.BookingStatusEnum.Pending, CustomerId = localInsertedCustomerId, DeviceId = _deviceId, SeatId = _seatId, Uploaded = false };
+            var booking = new Models.Booking() { BookingStatus = (int)StaticData.BookingStatusEnum.Pending, CustomerId = localInsertedCustomerId, DeviceId = _deviceId, SeatId = _seatId, Uploaded = false };
 
             var insertedId = _bookingService.InsertBookingToLocal(booking);
 
@@ -69,6 +72,26 @@ namespace TabApplication.Forms
         public void MessageReceived(object sender, EventArgs e)
         {
             _seatId = (int)sender;
+        }
+
+        private new bool Validate()
+        {
+            if (string.IsNullOrWhiteSpace(txtNic.Text))
+            {
+                MessageBox.Show("NIC cannot be empty", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            else if (string.IsNullOrWhiteSpace(txtMobile.Text))
+            {
+                MessageBox.Show("Mobile number cannot be empty", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            else if (string.IsNullOrWhiteSpace(txtEmail.Text))
+            {
+                MessageBox.Show("Email cannot be empty", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            return true;
         }
     }
 }

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using TabApplication.Models;
 using TabApplication.Services;
+using TabApplication.Utility;
 
 namespace TabApplication.Forms
 {
@@ -26,12 +27,42 @@ namespace TabApplication.Forms
         {
             var booking =_bookingService.SelectBookingBySeatId(seatId);
 
-            txtrefNo.Text = booking.BookingId.ToString();
-            txtName.Text = booking.CustomerName;
-            txtNic.Text = booking.CustomerNic;
-            txtEmail.Text = booking.CustomerEmail;
-            txtMobile.Text = booking.CustomerTel;
-            lblSeatStatus.Text = booking.BookingStatus.ToString();
+            if (booking!=null)
+            {
+                txtrefNo.Text = booking.BookingId.ToString();
+                txtName.Text = booking.CustomerName;
+                txtNic.Text = booking.CustomerNic;
+                txtEmail.Text = booking.CustomerEmail;
+                txtMobile.Text = booking.CustomerTel;
+                lblSeatStatus.Text = GetBookingStatusName(booking.BookingStatus);
+            }         
+        }
+
+        private string GetBookingStatusName(int statusId)
+        {
+            if (statusId==(int)StaticData.BookingStatusEnum.Accepted)
+            {
+                lblSeatStatus.BackColor = Color.Orange;
+                return "Accepted";
+            }else if (statusId == (int)StaticData.BookingStatusEnum.Pending)
+            {
+                lblSeatStatus.BackColor = Color.Yellow;
+                return "Pending";
+            }
+            else if (statusId == (int)StaticData.BookingStatusEnum.Rejected)
+            {
+                lblSeatStatus.BackColor = Color.Red;
+                return "Rejected";
+            }
+            else if (statusId == (int)StaticData.BookingStatusEnum.Cancelled)
+            {
+                lblSeatStatus.BackColor = Color.Orange;
+                return "Cancelled";
+            }
+            else
+            {
+                return "";
+            }
         }
 
         public void MessageReceived(object sender, EventArgs e)

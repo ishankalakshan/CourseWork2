@@ -28,26 +28,29 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BookingInfo));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.txtMobile = new System.Windows.Forms.TextBox();
             this.txtEmail = new System.Windows.Forms.TextBox();
             this.txtName = new System.Windows.Forms.TextBox();
+            this.txtrefNo = new System.Windows.Forms.TextBox();
             this.txtNic = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
-            this.txtrefNo = new System.Windows.Forms.TextBox();
             this.lblSeatNo = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.lblSeatStatus = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.button1);
             this.groupBox1.Controls.Add(this.btnCancel);
             this.groupBox1.Controls.Add(this.txtMobile);
@@ -69,6 +72,24 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Booking Info";
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(293, 24);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(69, 13);
+            this.label6.TabIndex = 4;
+            this.label6.Text = "Seat Number";
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(184, 176);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(122, 23);
+            this.button1.TabIndex = 3;
+            this.button1.Text = "Cancel booking";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
             // btnCancel
             // 
             this.btnCancel.Location = new System.Drawing.Point(312, 176);
@@ -80,6 +101,7 @@
             // 
             // txtMobile
             // 
+            this.txtMobile.BackColor = System.Drawing.Color.White;
             this.txtMobile.Enabled = false;
             this.txtMobile.Location = new System.Drawing.Point(66, 144);
             this.txtMobile.Name = "txtMobile";
@@ -89,6 +111,7 @@
             // 
             // txtEmail
             // 
+            this.txtEmail.BackColor = System.Drawing.Color.White;
             this.txtEmail.Enabled = false;
             this.txtEmail.Location = new System.Drawing.Point(66, 116);
             this.txtEmail.Name = "txtEmail";
@@ -98,6 +121,7 @@
             // 
             // txtName
             // 
+            this.txtName.BackColor = System.Drawing.Color.White;
             this.txtName.Enabled = false;
             this.txtName.Location = new System.Drawing.Point(66, 85);
             this.txtName.Name = "txtName";
@@ -105,8 +129,19 @@
             this.txtName.Size = new System.Drawing.Size(187, 20);
             this.txtName.TabIndex = 1;
             // 
+            // txtrefNo
+            // 
+            this.txtrefNo.BackColor = System.Drawing.Color.White;
+            this.txtrefNo.Enabled = false;
+            this.txtrefNo.Location = new System.Drawing.Point(66, 30);
+            this.txtrefNo.Name = "txtrefNo";
+            this.txtrefNo.ReadOnly = true;
+            this.txtrefNo.Size = new System.Drawing.Size(187, 20);
+            this.txtrefNo.TabIndex = 1;
+            // 
             // txtNic
             // 
+            this.txtNic.BackColor = System.Drawing.Color.White;
             this.txtNic.Enabled = false;
             this.txtNic.Location = new System.Drawing.Point(66, 59);
             this.txtNic.Name = "txtNic";
@@ -130,6 +165,25 @@
             this.label3.TabIndex = 0;
             this.label3.Text = "Email";
             // 
+            // label5
+            // 
+            this.label5.Location = new System.Drawing.Point(12, 33);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(60, 23);
+            this.label5.TabIndex = 0;
+            this.label5.Text = "Ref No";
+            // 
+            // lblSeatNo
+            // 
+            this.lblSeatNo.BackColor = System.Drawing.Color.Gainsboro;
+            this.lblSeatNo.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.lblSeatNo.Font = new System.Drawing.Font("Segoe Print", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSeatNo.Location = new System.Drawing.Point(290, 43);
+            this.lblSeatNo.Name = "lblSeatNo";
+            this.lblSeatNo.Size = new System.Drawing.Size(73, 62);
+            this.lblSeatNo.TabIndex = 0;
+            this.lblSeatNo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // label2
             // 
             this.label2.Location = new System.Drawing.Point(12, 62);
@@ -137,6 +191,15 @@
             this.label2.Size = new System.Drawing.Size(60, 23);
             this.label2.TabIndex = 0;
             this.label2.Text = "NIC ";
+            // 
+            // lblSeatStatus
+            // 
+            this.lblSeatStatus.Location = new System.Drawing.Point(293, 119);
+            this.lblSeatStatus.Name = "lblSeatStatus";
+            this.lblSeatStatus.Size = new System.Drawing.Size(70, 31);
+            this.lblSeatStatus.TabIndex = 0;
+            this.lblSeatStatus.Text = "Status";
+            this.lblSeatStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label1
             // 
@@ -146,51 +209,6 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Name ";
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(184, 176);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(122, 23);
-            this.button1.TabIndex = 3;
-            this.button1.Text = "Cancel booking";
-            this.button1.UseVisualStyleBackColor = true;
-            // 
-            // label5
-            // 
-            this.label5.Location = new System.Drawing.Point(12, 33);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(60, 23);
-            this.label5.TabIndex = 0;
-            this.label5.Text = "Ref No";
-            // 
-            // txtrefNo
-            // 
-            this.txtrefNo.Enabled = false;
-            this.txtrefNo.Location = new System.Drawing.Point(66, 30);
-            this.txtrefNo.Name = "txtrefNo";
-            this.txtrefNo.ReadOnly = true;
-            this.txtrefNo.Size = new System.Drawing.Size(187, 20);
-            this.txtrefNo.TabIndex = 1;
-            // 
-            // lblSeatNo
-            // 
-            this.lblSeatNo.Font = new System.Drawing.Font("Segoe Print", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSeatNo.Location = new System.Drawing.Point(290, 43);
-            this.lblSeatNo.Name = "lblSeatNo";
-            this.lblSeatNo.Size = new System.Drawing.Size(73, 62);
-            this.lblSeatNo.TabIndex = 0;
-            this.lblSeatNo.Text = "NIC ";
-            this.lblSeatNo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // lblSeatStatus
-            // 
-            this.lblSeatStatus.Location = new System.Drawing.Point(290, 113);
-            this.lblSeatStatus.Name = "lblSeatStatus";
-            this.lblSeatStatus.Size = new System.Drawing.Size(60, 23);
-            this.lblSeatStatus.TabIndex = 0;
-            this.lblSeatStatus.Text = "Status";
-            this.lblSeatStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
             // BookingInfo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -198,8 +216,10 @@
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(414, 241);
             this.Controls.Add(this.groupBox1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximumSize = new System.Drawing.Size(430, 280);
             this.Name = "BookingInfo";
-            this.Text = "BookingInfo";
+            this.Text = "Ticket";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
@@ -223,5 +243,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label lblSeatStatus;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label6;
     }
 }
