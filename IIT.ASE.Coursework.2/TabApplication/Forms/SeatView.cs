@@ -126,7 +126,7 @@ namespace TabApplication.Forms
             }
         }
 
-        private void OnSeatClickAsync(object sender, EventArgs e)
+        private void OnSeatClick(object sender, EventArgs e)
         {
             var button = (Button)sender;
             var seatId = Convert.ToInt32(button.Name.Substring(button.Name.LastIndexOf('_') + 1));
@@ -143,44 +143,44 @@ namespace TabApplication.Forms
             //var res = testmethod();
         }
 
-        private async Task testmethod()
-        {
-            using (var client = new HttpClient())
-            {
-                client.BaseAddress = new Uri("http://localhost:35903"); //http://iitstagecraftremotewebapi.azurewebsites.net
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+        //private async Task testmethod()
+        //{
+        //    using (var client = new HttpClient())
+        //    {
+        //        client.BaseAddress = new Uri("http://localhost:35903"); //http://iitstagecraftremotewebapi.azurewebsites.net
+        //        client.DefaultRequestHeaders.Accept.Clear();
+        //        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                ////GET Method  
-                //HttpResponseMessage response = await client.GetAsync("api/GetSeatStatus");
-                //if (response.IsSuccessStatusCode)
-                //{
-                //    var department = response.Content.ReadAsAsync<IList<Seat>>();
+        //        ////GET Method  
+        //        //HttpResponseMessage response = await client.GetAsync("api/GetSeatStatus");
+        //        //if (response.IsSuccessStatusCode)
+        //        //{
+        //        //    var department = response.Content.ReadAsAsync<IList<Seat>>();
 
-                //}
-                //else
-                //{
-                //    MessageBox.Show("Internal server Error");
-                //}
-                var customer = new List<Customer>();
-                customer.Add(new Customer() { CustomerId = 1, CustomerEmail = "asdgkjashd", CustomerName = "ishanka", CustomerNic = "adas", CustomerTel = "0988787" });
-                var a = new Customer() { CustomerNic = "912701395v", CustomerEmail = "123qweaasd", CustomerName = "Ishanka", CustomerTel = "123123" };
-                HttpResponseMessage response = await client.PostAsJsonAsync("api/InsertOrUpdateCustomer", a);
+        //        //}
+        //        //else
+        //        //{
+        //        //    MessageBox.Show("Internal server Error");
+        //        //}
+        //        var customer = new List<Customer>();
+        //        customer.Add(new Customer() { CustomerId = 1, CustomerEmail = "asdgkjashd", CustomerName = "ishanka", CustomerNic = "adas", CustomerTel = "0988787" });
+        //        var a = new Customer() { CustomerNic = "912701395v", CustomerEmail = "123qweaasd", CustomerName = "Ishanka", CustomerTel = "123123" };
+        //        HttpResponseMessage response = await client.PostAsJsonAsync("api/InsertOrUpdateCustomer", a);
 
-                if (response.IsSuccessStatusCode)
-                {
-                    // Get the URI of the created resource.  
-                    Uri returnUrl = response.Headers.Location;
-                    var department = response.Content.ReadAsAsync<int>();
-                    Console.WriteLine(returnUrl);
-                }
-            }
-        }
+        //        if (response.IsSuccessStatusCode)
+        //        {
+        //            // Get the URI of the created resource.  
+        //            Uri returnUrl = response.Headers.Location;
+        //            var department = response.Content.ReadAsAsync<int>();
+        //            Console.WriteLine(returnUrl);
+        //        }
+        //    }
+        //}
 
-        private async Task UpdateSeatsinLocalDbAsync()
-        {
-            await _seatService.UpdateSeatStatusInLocalFromRemoteAsync();
-        }
+        //private async Task UpdateSeatsinLocalDbAsync()
+        //{
+        //    await _seatService.UpdateSeatStatusInLocalFromRemoteAsync();
+        //}
 
         public void SeatReceived(object sender, EventArgs e)
         {
@@ -197,11 +197,10 @@ namespace TabApplication.Forms
             }
         }
 
-        private void backgroundWorker1_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
+        private void UploadBooking_Worker(object sender, System.ComponentModel.DoWorkEventArgs e)
         {
             try
             {
-                var i = 1;
                 while (true)
                 {
                     _bookingService.UploadBookingsToRemoteAsync();                 
@@ -214,7 +213,7 @@ namespace TabApplication.Forms
             }                       
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void RefreshButton_Click(object sender, EventArgs e)
         {
             UpdateSeatStatus();
         }

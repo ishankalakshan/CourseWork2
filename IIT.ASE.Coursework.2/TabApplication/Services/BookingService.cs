@@ -46,11 +46,11 @@ namespace TabApplication.Services
             return insertedBookingId;
         }
 
-        public bool CheckWhetherUserExistsInRemote(Customer customer)
-        {
-            var result = _bookingRepository.SelectCustomerByNic(customer.CustomerNic,false).Count;
-            return result > 0;
-        }
+        //public bool CheckWhetherUserExistsInRemote(Customer customer)
+        //{
+        //    var result = _bookingRepository.SelectCustomerByNic(customer.CustomerNic).Count;
+        //    return result > 0;
+        //}
 
         public async System.Threading.Tasks.Task UploadBookingsToRemoteAsync()
         {
@@ -114,7 +114,7 @@ namespace TabApplication.Services
         public async System.Threading.Tasks.Task<Customer> SearchForCustomerNicAsync(string Nic)
         {
             var result = _bookingRepository.SelectCustomerByNic(Nic);
-            if (false)
+            if (result.Count>0)
             {
                 return result.FirstOrDefault();
             }

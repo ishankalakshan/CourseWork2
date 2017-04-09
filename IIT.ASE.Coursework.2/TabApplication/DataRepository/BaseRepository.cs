@@ -47,46 +47,29 @@ namespace TabApplication.DataRepository
 
         }
 
-        public IList<T> Select<T>(string sql, object parameters=null,bool local = true)
+        public IList<T> Select<T>(string sql, object parameters=null)
         {
-            if (local)
-            {
                 using (var db = GetDbContextLocal())
                 {
                     var result = db.Query<T>(sql, parameters);
                     return result.ToList();
-                }
-            }
-            else
-            {
-                return null;//For remote databse
-            }                        
+                }                        
         }
 
-        public void Insert(string sql, object parameters = null, bool local = true)
+        public void Insert(string sql, object parameters = null)
         {
-            if (local)
-            {
-                using (var db = GetDbContextLocal())
+            using (var db = GetDbContextLocal())
                 {
                     db.Execute(sql, parameters);
                 }
-            }
         }
 
-        public int InsertSingle(string sql,object parameters=null,bool local = true)
+        public int InsertSingle(string sql,object parameters=null)
         {
-            if (local)
-            {
-                using (var db = GetDbContextLocal())
+            using (var db = GetDbContextLocal())
                 {
                     return db.Query<int>(sql, parameters).First();
-                }
-            }
-            else
-            {
-                return 0;
-            }            
+                }          
         }
 
         public void ExecuteScaler(string sql, object parameters=null)

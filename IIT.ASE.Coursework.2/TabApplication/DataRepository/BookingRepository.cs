@@ -18,17 +18,17 @@ namespace TabApplication.DataRepository
         {
             const string sql = "INSERT INTO Customer(CustomerNic,CustomerName,CustomerEmail,CustomerTel,DeviceId) " +
                                "VALUES(@CustomerNic,@CustomerName,@CustomerEmail,@CustomerTel,@DeviceId);SELECT last_insert_rowid();";
-            return _baseRepository.InsertSingle(sql, customer, true);
+            return _baseRepository.InsertSingle(sql, customer);
         }
 
         public int InsertBookingToLocal(Booking booking)
         {
             const string sql = "INSERT INTO Booking(DeviceId,SeatId,CustomerId,BookingStatus,Uploaded) " +
                                "VALUES(@DeviceId,@SeatId,@CustomerId,@BookingStatus,@Uploaded);SELECT last_insert_rowid();";
-            return _baseRepository.InsertSingle(sql, booking, true);
+            return _baseRepository.InsertSingle(sql, booking);
         }
 
-        public IList<Customer> SelectCustomerByNic(string CustomerNic,bool local=true)
+        public IList<Customer> SelectCustomerByNic(string CustomerNic)
         {
             const string sql = "SELECT * FROM Customer WHERE CustomerNic=@CustomerNic";
 
@@ -37,7 +37,7 @@ namespace TabApplication.DataRepository
                 CustomerNic
             };
 
-            return _baseRepository.Select<Customer>(sql,queryArgs,local);
+            return _baseRepository.Select<Customer>(sql,queryArgs);
         }
 
         public void UpdateSeatStaus(int seatId,int seatStatus)
