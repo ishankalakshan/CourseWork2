@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
+using System.Threading.Tasks;
 using TabApplication.DataRepository;
 using TabApplication.Models;
 using TabApplication.Models.Composite;
@@ -52,7 +53,7 @@ namespace TabApplication.Services
         //    return result > 0;
         //}
 
-        public async System.Threading.Tasks.Task UploadBookingsToRemoteAsync()
+        public async Task UploadBookingsToRemoteAsync()
         {
             try
             {
@@ -76,6 +77,34 @@ namespace TabApplication.Services
                 throw e;
             }
             
+        }
+
+        public async Task UploadCancelledBookingsToRemoteAsync()
+        {
+            try
+            {
+                var tobeUpload = _bookingRepository.SelectCancelledBookingsToRemote(); ;
+                if (tobeUpload.Count > 0)
+                {
+                    using (var client = _baseWebApi.CreateHttpClient())
+                    {
+                        var response = await client.PostAsJsonAsync("api/CancelBooking", tobeUpload);
+                        if (response.IsSuccessStatusCode)
+                        {
+                            _bookingRepository.UpdateBookingStatus(tobeUpload);
+                        }
+                        else
+                        {
+                            Debug.WriteLine("Failed");
+                        }
+                    }
+                }
+            }
+            catch (System.Exception e)
+            {
+
+                throw e;
+            }
         }
 
         public void UpdateBookingStatusAndSeatStatus(IList<Booking> bookings)
@@ -142,5 +171,12 @@ namespace TabApplication.Services
                 }
             }
         }
+
+        public void CancelBooking(int bookingId)
+        {
+            _bookingRepository.CancelBooking(bookingId);
+        }
+
+
     }
 }

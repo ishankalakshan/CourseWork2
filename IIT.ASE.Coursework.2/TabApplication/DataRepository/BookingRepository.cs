@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using TabApplication.Models;
 using TabApplication.Models.Composite;
+using TabApplication.Utility;
 
 namespace TabApplication.DataRepository
 {
@@ -67,7 +69,7 @@ namespace TabApplication.DataRepository
             {
                 uploaded
             };
-            var sql = "SELECT * FROM Booking JOIN Customer ON Customer.CustomerId=Booking.CustomerId WHERE Uploaded=@uploaded";
+            var sql = "SELECT * FROM Booking JOIN Customer ON Customer.CustomerId=Booking.CustomerId WHERE Booking.Uploaded=@uploaded AND Booking.BookingStatus=2";
             return _baseRepository.Select<CBookingCustomer>(sql,queryArgs);
         }
 
@@ -82,6 +84,17 @@ namespace TabApplication.DataRepository
             _baseRepository.ExecuteScaler(sql,queryArgs);
         }
 
+        internal IList<Booking> SelectCancelledBookingsToRemote()
+        {
+            var uploaded = false;
+            var queryArgs = new
+            {
+                uploaded
+            };
+            var sql = "SELECT * FROM Booking WHERE Booking.Uploaded=@uploaded AND Booking.BookingStatus=4";
+            return _baseRepository.Select<Booking>(sql, queryArgs);
+        }
+
         public void UpdateBookingStatus(IList<Booking> bookings)
         {
             var sql = "UPDATE Booking SET BookingStatus=@BookingStatus,Uploaded=1 WHERE BookingId=@BookingId;";         
@@ -93,6 +106,18 @@ namespace TabApplication.DataRepository
         {
             var sql2 = "UPDATE Seat SET SeatStatusId=@SeatStatusId WHERE SeatId=@seatId";
             _baseRepository.Update(sql2, seats);
+        }
+
+        public void CancelBooking(int bookingId)
+        {
+            var queryArgs = new
+            {
+                BookingId = bookingId,
+                BookingStatus = (int)StaticData.BookingStatusEnum.Cancelled,
+                seatStatusId=(int)StaticData.SeatStatusEnum.Available
+            };
+            var sql = "UPDATE Booking SET BookingStatus=@BookingStatus,Uploaded=0 WHERE BookingId=@BookingId;UPDATE Seat SET SeatStatusId=@seatStatusId WHERE SeatId IN(SELECT SeatId FROM Booking WHERE BookingId=@BookingId);";
+            _baseRepository.Update(sql, queryArgs);
         }
     }
 }

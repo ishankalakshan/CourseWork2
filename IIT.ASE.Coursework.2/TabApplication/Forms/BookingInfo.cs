@@ -17,6 +17,7 @@ namespace TabApplication.Forms
     {
         private int _seatId;
         private BookingService _bookingService;
+        private Booking _currentBooking;
         public BookingInfo()
         {
             InitializeComponent();
@@ -70,6 +71,17 @@ namespace TabApplication.Forms
             _seatId = (int)sender;
             lblSeatNo.Text = _seatId.ToString();
             GetBookingInfo(_seatId);
+        }
+
+        private void btnCancelBooking_Click(object sender, EventArgs e)
+        {
+            var booking = CreateBookingObject();
+            _bookingService.CancelBooking(booking.BookingId);
+        }
+
+        private Booking CreateBookingObject()
+        {
+            return new Booking() {BookingId=Convert.ToInt32(txtrefNo.Text),BookingStatus=(int)StaticData.BookingStatusEnum.Cancelled,DeviceId=UtilityMethod.GetMACAddress()};
         }
     }
 }

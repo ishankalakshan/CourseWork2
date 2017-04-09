@@ -31,7 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BookingInfo));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnCancelBooking = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.txtMobile = new System.Windows.Forms.TextBox();
             this.txtEmail = new System.Windows.Forms.TextBox();
@@ -51,7 +51,7 @@
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.label6);
-            this.groupBox1.Controls.Add(this.button1);
+            this.groupBox1.Controls.Add(this.btnCancelBooking);
             this.groupBox1.Controls.Add(this.btnCancel);
             this.groupBox1.Controls.Add(this.txtMobile);
             this.groupBox1.Controls.Add(this.txtEmail);
@@ -81,14 +81,15 @@
             this.label6.TabIndex = 4;
             this.label6.Text = "Seat Number";
             // 
-            // button1
+            // btnCancelBooking
             // 
-            this.button1.Location = new System.Drawing.Point(184, 176);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(122, 23);
-            this.button1.TabIndex = 3;
-            this.button1.Text = "Cancel booking";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnCancelBooking.Location = new System.Drawing.Point(184, 176);
+            this.btnCancelBooking.Name = "btnCancelBooking";
+            this.btnCancelBooking.Size = new System.Drawing.Size(122, 23);
+            this.btnCancelBooking.TabIndex = 3;
+            this.btnCancelBooking.Text = "Cancel booking";
+            this.btnCancelBooking.UseVisualStyleBackColor = true;
+            this.btnCancelBooking.Click += new System.EventHandler(this.btnCancelBooking_Click);
             // 
             // btnCancel
             // 
@@ -229,7 +230,7 @@
         #endregion
 
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnCancelBooking;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.TextBox txtMobile;
         private System.Windows.Forms.TextBox txtEmail;

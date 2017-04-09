@@ -10,24 +10,7 @@ namespace IitStagecraftRemoteWebApi.Controllers
     public class BookingController : ApiController
     {
         private BaseRepository _baseRepo = new BaseRepository();
-
-        private int InsertOrUpdateCustomer(Customer customer)
-        {
-            var res = _baseRepo.Select<Customer>("Select * from Customers WHERE CustomerNic=@CustomerNic", customer);
-            if (res.Count == 0)
-            {
-                var sql = "INSERT INTO Customers(CustomerNic,CustomerName,CustomerEmail,CustomerTel)" +
-                    "VALUES (@CustomerNic,@CustomerName,@CustomerEmail,@CustomerTel);SELECT CAST(SCOPE_IDENTITY() as int)";
-                return _baseRepo.Select<int>(sql, customer).Single();
-            }
-            else
-            {
-                var sql = "UPDATE Customers SET CustomerName=@CustomerName,CustomerEmail=@CustomerEmail,CustomerTel=@CustomerTel WHERE CustomerNic=@CustomerNic;" +
-                    "SELECT Id FROM Customers WHERE CustomerNic=@CustomerNic";
-                return _baseRepo.Select<int>(sql, customer).Single();
-            }
-        }
-
+       
         [HttpPost]
         [Route("api/InsertBooking")]
         public IList<Booking> InsertBooking(IList<CBookingCustomer> cbooking)
@@ -95,6 +78,43 @@ namespace IitStagecraftRemoteWebApi.Controllers
             else
             {
                 return null;
+            }
+        }
+
+        [HttpPost]
+        [Route("api/CancelBooking")]
+        public void CancelBooking(IList<Booking> booking)
+        {
+            foreach (var item in booking)
+            {
+                var queryArgs2 = new
+                {
+                    BookingStatus = (int)StaticData.BookingStatusEnum.Cancelled,
+                    deviceId = item.DeviceId,
+                    bookingId = item.BookingId,
+                    SeatStatusId = (int)StaticData.SeatStatusEnum.Available
+                };
+                var sql = "UPDATE Bookings SET Bookingstatus=@BookingStatus WHERE DeviceId=@deviceId AND BookingId=@bookingId;" +
+                    "UPDATE Seats SET SeatStatusId=@SeatStatusId WHERE Id IN(SELECT Seat_Id FROM Bookings WHERE DeviceId=@deviceId AND BookingId=@bookingId);";
+                _baseRepo.Execute(sql, queryArgs2);
+            }
+            
+        }
+
+        private int InsertOrUpdateCustomer(Customer customer)
+        {
+            var res = _baseRepo.Select<Customer>("Select * from Customers WHERE CustomerNic=@CustomerNic", customer);
+            if (res.Count == 0)
+            {
+                var sql = "INSERT INTO Customers(CustomerNic,CustomerName,CustomerEmail,CustomerTel)" +
+                    "VALUES (@CustomerNic,@CustomerName,@CustomerEmail,@CustomerTel);SELECT CAST(SCOPE_IDENTITY() as int)";
+                return _baseRepo.Select<int>(sql, customer).Single();
+            }
+            else
+            {
+                var sql = "UPDATE Customers SET CustomerName=@CustomerName,CustomerEmail=@CustomerEmail,CustomerTel=@CustomerTel WHERE CustomerNic=@CustomerNic;" +
+                    "SELECT Id FROM Customers WHERE CustomerNic=@CustomerNic";
+                return _baseRepo.Select<int>(sql, customer).Single();
             }
         }
 
