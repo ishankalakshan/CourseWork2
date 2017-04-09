@@ -23,10 +23,22 @@ namespace TabApplication.Forms
 
         private void btnSubmit_Click(object sender, System.EventArgs e)
         {
-            if (Validate())
+            try
             {
-                CreateBooking();
-            }       
+                if (Validate())
+                {
+                    CreateBooking();
+                }
+                MessageBox.Show("Booking created.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.Hide();
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show("Error occured !!", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            
+            
         }
 
         private void CreateBooking()

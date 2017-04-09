@@ -203,8 +203,8 @@ namespace TabApplication.Forms
             {
                 while (true)
                 {
-                    //_bookingService.UploadBookingsToRemoteAsync();    
-                    _bookingService.UploadCancelledBookingsToRemoteAsync();
+                     _bookingService.UploadBookingsToRemoteAsync();    
+                     _bookingService.UploadCancelledBookingsToRemoteAsync();
                     Thread.Sleep(600000);
                 }
             }
