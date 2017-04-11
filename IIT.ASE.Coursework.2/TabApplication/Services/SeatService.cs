@@ -33,24 +33,6 @@ namespace TabApplication.Services
             return _seatRepository.UpdateSeatStatusFromLocal();
         }
 
-        //public async Task UpdateSeatStatusInLocalFromRemoteAsync()
-        //{
-        //    using (var client = _baseWebApi.CreateHttpClient())
-        //    {
-        //        var response = await client.GetAsync("api/GetSeatStatus");
-        //        if (response.IsSuccessStatusCode)
-        //        {
-        //            var result= await response.Content.ReadAsAsync<IList<Seat>>();
-        //            _seatRepository.UpdateSeatStatusInLocalFromRemote(result);
-        //            UpdateSeatStatusFromLocal();
-        //        }
-        //        else
-        //        {
-        //            MessageBox.Show("Unable to connect to server");                 
-        //        }
-        //    }
-        //}
-
         public void LoadSeatsToLocalIfNotExists(List<Seat> seats)
         {
             var exists = _seatRepository.IsInitialSeatDataPresentInLocal();

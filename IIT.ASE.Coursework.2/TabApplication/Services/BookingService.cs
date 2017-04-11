@@ -48,12 +48,6 @@ namespace TabApplication.Services
             return insertedBookingId;
         }
 
-        //public bool CheckWhetherUserExistsInRemote(Customer customer)
-        //{
-        //    var result = _bookingRepository.SelectCustomerByNic(customer.CustomerNic).Count;
-        //    return result > 0;
-        //}
-
         //this is where the API call is made to upload data to remote database
         public async Task UploadBookingsToRemoteAsync()
         {
