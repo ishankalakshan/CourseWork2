@@ -36,7 +36,12 @@ namespace TabApplication.Forms
                 txtEmail.Text = booking.CustomerEmail;
                 txtMobile.Text = booking.CustomerTel;
                 lblSeatStatus.Text = GetBookingStatusName(booking.BookingStatus);
-            }         
+            }
+
+            if (booking.BookingStatus==(int)StaticData.BookingStatusEnum.Accepted)
+            {
+                btnCancelBooking.Visible = true;
+            }
         }
 
         private string GetBookingStatusName(int statusId)
@@ -77,11 +82,17 @@ namespace TabApplication.Forms
         {
             var booking = CreateBookingObject();
             _bookingService.CancelBooking(booking.BookingId);
+            this.Hide();
         }
 
         private Booking CreateBookingObject()
         {
             return new Booking() {BookingId=Convert.ToInt32(txtrefNo.Text),BookingStatus=(int)StaticData.BookingStatusEnum.Cancelled,DeviceId=UtilityMethod.GetMACAddress()};
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            this.Hide();
         }
     }
 }

@@ -190,7 +190,7 @@ namespace TabApplication.Forms
 
             foreach (var seat in seatsButtons)
             {
-                if (seat.Name=="SeatId_"+seatId)
+                if (seat.Name=="seatId_"+seatId)
                 {
                     UpdateButtonColor(seat, new Seat() { SeatStatusId = (int)StaticData.SeatStatusEnum.Pending });
                 }
@@ -205,7 +205,7 @@ namespace TabApplication.Forms
                 {
                      _bookingService.UploadBookingsToRemoteAsync();    
                      _bookingService.UploadCancelledBookingsToRemoteAsync();
-                    Thread.Sleep(600000);
+                    Thread.Sleep(180000);
                 }
             }
             catch (Exception ex)
@@ -224,8 +224,13 @@ namespace TabApplication.Forms
             while (true)
             {
                 UpdateSeatStatus();
-                Thread.Sleep(120000);
+                Thread.Sleep(60000);
             }
+        }
+
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

@@ -25,7 +25,7 @@ namespace DesktopManager.Models
             {
                 if (BookingStatus==1)
                 {
-                    return "Pending";
+                    return "Accepted";
                 }
                 if (BookingStatus == 2)
                 {

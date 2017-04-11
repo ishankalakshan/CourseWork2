@@ -89,6 +89,7 @@
             this.btnCancelBooking.TabIndex = 3;
             this.btnCancelBooking.Text = "Cancel booking";
             this.btnCancelBooking.UseVisualStyleBackColor = true;
+            this.btnCancelBooking.Visible = false;
             this.btnCancelBooking.Click += new System.EventHandler(this.btnCancelBooking_Click);
             // 
             // btnCancel
@@ -99,6 +100,7 @@
             this.btnCancel.TabIndex = 3;
             this.btnCancel.Text = "Close";
             this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // txtMobile
             // 
