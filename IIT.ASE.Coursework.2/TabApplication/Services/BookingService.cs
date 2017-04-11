@@ -20,6 +20,7 @@ namespace TabApplication.Services
             _baseWebApi = new BaseWebApiCall();
     }
 
+        //insert customer record to local
         public int InsertCustomer(Customer customer)
         {
             var customerId = CheckWhetherUserExistsInLocal(customer);
@@ -53,6 +54,7 @@ namespace TabApplication.Services
         //    return result > 0;
         //}
 
+        //this is where the API call is made to upload data to remote database
         public async Task UploadBookingsToRemoteAsync()
         {
             try
@@ -79,6 +81,7 @@ namespace TabApplication.Services
             
         }
 
+        //this is where the API call is made to upload data to remote database
         public async Task UploadCancelledBookingsToRemoteAsync()
         {
             try
@@ -140,7 +143,8 @@ namespace TabApplication.Services
             return _bookingRepository.GetBookingInfo(seatId);
         }
 
-        public async System.Threading.Tasks.Task<Customer> SearchForCustomerNicAsync(string Nic)
+        //used to search customer by nic
+        public async Task<Customer> SearchForCustomerNicAsync(string Nic)
         {
             var result = _bookingRepository.SelectCustomerByNic(Nic);
             if (result.Count>0)

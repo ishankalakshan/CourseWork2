@@ -197,6 +197,7 @@ namespace TabApplication.Forms
             }
         }
 
+        //background worker used for uploading booking data and cancel booking data. It is called every 3 miniutes
         private void UploadBooking_Worker(object sender, System.ComponentModel.DoWorkEventArgs e)
         {
             try
@@ -214,11 +215,13 @@ namespace TabApplication.Forms
             }                       
         }
 
+        //use to fprce refresh seat status from local database
         private void RefreshButton_Click(object sender, EventArgs e)
         {
             UpdateSeatStatus();
         }
 
+        //this background worker is used to load seat status from local database. That methos is called every minute.
         private void UpdateSeatWorker_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
         {
             while (true)

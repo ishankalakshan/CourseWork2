@@ -16,6 +16,7 @@ namespace TabApplication.DataRepository
             _baseRepository=new BaseRepository();
         }
 
+        //insert customer record to local and retrieve Id
         public int InsertCustomerToLocal(Customer customer)
         {
             const string sql = "INSERT INTO Customer(CustomerNic,CustomerName,CustomerEmail,CustomerTel,DeviceId) " +
@@ -23,6 +24,7 @@ namespace TabApplication.DataRepository
             return _baseRepository.InsertSingle(sql, customer);
         }
 
+        //insert booking record to local and retrieve Id
         public int InsertBookingToLocal(Booking booking)
         {
             const string sql = "INSERT INTO Booking(DeviceId,SeatId,CustomerId,BookingStatus,Uploaded) " +
@@ -42,6 +44,7 @@ namespace TabApplication.DataRepository
             return _baseRepository.Select<Customer>(sql,queryArgs);
         }
 
+        //update seat status in the local.Pass the enum status
         public void UpdateSeatStaus(int seatId,int seatStatus)
         {
             var queryArgs = new
@@ -62,6 +65,7 @@ namespace TabApplication.DataRepository
             return _baseRepository.Select<CBookingCustomer>(sql, queryArgs).FirstOrDefault();
         }
 
+        //selects the pending, not uploaded bookings from local and upload to remote 
         public IList<CBookingCustomer> SelectPendingBookingsToRemote()
         {
             var uploaded = false;
@@ -73,6 +77,7 @@ namespace TabApplication.DataRepository
             return _baseRepository.Select<CBookingCustomer>(sql,queryArgs);
         }
 
+        //after uploading to remote use this to set uplaoded flag 
         public void UpdateUploadStatus(IList<int> bookingids)
         {
             var uploaded = true;
@@ -84,6 +89,7 @@ namespace TabApplication.DataRepository
             _baseRepository.ExecuteScaler(sql,queryArgs);
         }
 
+        //select cancelled bookings to send to remote 
         internal IList<Booking> SelectCancelledBookingsToRemote()
         {
             var uploaded = false;
@@ -95,6 +101,7 @@ namespace TabApplication.DataRepository
             return _baseRepository.Select<Booking>(sql, queryArgs);
         }
 
+        //after uploading cancellations to remote use this to set uplaoded flag 
         public void UpdateBookingStatus(IList<Booking> bookings)
         {
             var sql = "UPDATE Booking SET BookingStatus=@BookingStatus,Uploaded=1 WHERE BookingId=@BookingId;";         
@@ -108,6 +115,7 @@ namespace TabApplication.DataRepository
             _baseRepository.Update(sql2, seats);
         }
 
+        //use to cancel bookings and save in local
         public void CancelBooking(int bookingId)
         {
             var queryArgs = new

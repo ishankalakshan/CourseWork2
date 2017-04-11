@@ -12,12 +12,14 @@ namespace TabApplication.DataRepository
             _baseRepository = new BaseRepository();
         }
 
+        //load seat status from the local database
         public IList<Seat> UpdateSeatStatusFromLocal()
         {
             const string sql = "SELECT * FROM Seat";
             return _baseRepository.Select<Seat>(sql);
         }
 
+        //Seed initial seat ids
         public void InitializeSeatsInLocalDb(List<Seat> seats)
         {
             const string sql = "INSERT INTO Seat(SeatId,SeatStatusId) VALUES(@SeatId,@SeatStatusId)";
@@ -30,10 +32,10 @@ namespace TabApplication.DataRepository
             return _baseRepository.Select<Seat>(sql).Count>0;
         }
 
-        public void UpdateSeatStatusInLocalFromRemote(IList<Seat> seats)
-        {
-            const string sql = "UPDATE Seat SET SeatStatusId=@SeatStatusId WHERE SeatId=@SeatId";
-             _baseRepository.ExecuteScaler(sql, seats);
-        }
+        //public void UpdateSeatStatusInLocalFromRemote(IList<Seat> seats)
+        //{
+        //    const string sql = "UPDATE Seat SET SeatStatusId=@SeatStatusId WHERE SeatId=@SeatId";
+        //     _baseRepository.ExecuteScaler(sql, seats);
+        //}
     }
 }

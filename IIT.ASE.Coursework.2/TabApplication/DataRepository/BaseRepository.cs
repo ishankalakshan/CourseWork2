@@ -14,11 +14,13 @@ namespace TabApplication.DataRepository
         public SQLiteDataAdapter _sqliteDataAdapter;
         public static string DbFile => Environment.CurrentDirectory + "\\IitStageCraftLocal.db";
 
+        //set the conenction string
         public SQLiteConnection GetDbContextLocal()
         {
             return new SQLiteConnection("Data Source=IitStageCraftLocal.db;Version=3;New=True;Compress=True;");
         }
        
+        //create tables if not exists
         public void CreateTables()
         {
             var CustomerTableString = "CREATE TABLE IF NOT EXISTS Customer(" +
@@ -47,6 +49,7 @@ namespace TabApplication.DataRepository
 
         }
 
+        //selects records from db and mapp to a class <T> 
         public IList<T> Select<T>(string sql, object parameters=null)
         {
                 using (var db = GetDbContextLocal())
@@ -56,6 +59,7 @@ namespace TabApplication.DataRepository
                 }                        
         }
 
+        //insert records with parameters
         public void Insert(string sql, object parameters = null)
         {
             using (var db = GetDbContextLocal())
@@ -64,6 +68,7 @@ namespace TabApplication.DataRepository
                 }
         }
 
+        //insert a single record and get back a int: used to retrieve inserted id
         public int InsertSingle(string sql,object parameters=null)
         {
             using (var db = GetDbContextLocal())
@@ -72,6 +77,7 @@ namespace TabApplication.DataRepository
                 }          
         }
 
+        //can be used to execute scaler queries
         public void ExecuteScaler(string sql, object parameters=null)
         {
             using (var db = GetDbContextLocal())
@@ -80,6 +86,7 @@ namespace TabApplication.DataRepository
             }
         }
 
+        //wrapper for updating databse records
         public void Update(string sql, object parameters = null)
         {
             using (var db = GetDbContextLocal())
