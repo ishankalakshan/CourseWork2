@@ -18,14 +18,15 @@ namespace DesktopManager.Data_Repository
             _baseRepo = new BaseRepository();
         }
 
-        public IList<CBookingCustomer> LoadBookings()
+        public IList<CBookingCustomer> LoadBookings(int statusId)
         {
             var sql = "select Bookings.Id as BookingId,Bookings.DeviceId,Bookings.BookingStatus,Customers.CustomerName," +
                 "customers.customernic,customers.CustomerEmail,customers.Customertel," +
                 "seats.seatid " +
                 "from Bookings " +
                 "join customers on customers.id = bookings.customer_id " +
-                "join Seats on Seats.id = bookings.seat_id";
+                "join Seats on Seats.id = bookings.seat_id " +
+                "where Bookings.BookingStatus="+statusId;
 
             return _baseRepo.Select<CBookingCustomer>(sql);
         }

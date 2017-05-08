@@ -16,9 +16,9 @@ namespace DesktopManager.Services
         {
             _bookingRepo = new BookingRepository();
         }
-        public IList<CBookingCustomer> LoadBookings()
+        public IList<CBookingCustomer> LoadBookings(int statusId)
         {
-            return _bookingRepo.LoadBookings(); 
+            return _bookingRepo.LoadBookings(statusId); 
         }
     }
 }

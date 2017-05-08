@@ -19,13 +19,14 @@ namespace DesktopManager.Forms
         {
             InitializeComponent();
             _bookingService = new BookingService();
+            BindStatusDropDown();
             LoadData();
             UpdateDTA.RunWorkerAsync();
         }
 
         public void LoadData()
         {
-            var data = _bookingService.LoadBookings();
+            var data = _bookingService.LoadBookings((int)cbRequestStatus.SelectedValue);
 
             dataGridView1.AutoGenerateColumns = false;            
             //dataGridView1.DataMember = 
@@ -42,6 +43,17 @@ namespace DesktopManager.Forms
             Cancelled = 4
         }
 
+        private void BindStatusDropDown()
+        {
+            cbRequestStatus.DisplayMember = "Value";
+            cbRequestStatus.ValueMember = "Key";
+
+            cbRequestStatus.DataSource = Enum.GetValues(typeof(BookingStatusEnum))
+                .Cast<BookingStatusEnum>()
+                .Select(p => new { Key = (int)p, Value = p.ToString() })
+                .ToList();
+        }
+
         private void UpdateDTA_DoWork(object sender, DoWorkEventArgs e)
         {
             while (true)
@@ -49,6 +61,11 @@ namespace DesktopManager.Forms
                 Thread.Sleep(30000);
                 this.Invoke(new MethodInvoker(LoadData));                             
             }
+        }
+
+        private void cbRequestStatus_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            LoadData();
         }
     }
 }
