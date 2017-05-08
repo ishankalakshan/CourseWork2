@@ -35,6 +35,7 @@
             this.Telephone = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Seat = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Status = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.UpdateDTA = new System.ComponentModel.BackgroundWorker();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -51,6 +52,7 @@
             this.dataGridView1.Location = new System.Drawing.Point(12, 31);
             this.dataGridView1.MultiSelect = false;
             this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView1.Size = new System.Drawing.Size(644, 202);
             this.dataGridView1.TabIndex = 0;
             // 
@@ -90,6 +92,10 @@
             this.Status.HeaderText = "Status";
             this.Status.Name = "Status";
             // 
+            // UpdateDTA
+            // 
+            this.UpdateDTA.DoWork += new System.ComponentModel.DoWorkEventHandler(this.UpdateDTA_DoWork);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -114,5 +120,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Telephone;
         private System.Windows.Forms.DataGridViewTextBoxColumn Seat;
         private System.Windows.Forms.DataGridViewTextBoxColumn Status;
+        private System.ComponentModel.BackgroundWorker UpdateDTA;
     }
 }

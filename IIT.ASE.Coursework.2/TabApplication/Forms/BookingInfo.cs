@@ -36,12 +36,12 @@ namespace TabApplication.Forms
                 txtEmail.Text = booking.CustomerEmail;
                 txtMobile.Text = booking.CustomerTel;
                 lblSeatStatus.Text = GetBookingStatusName(booking.BookingStatus);
-            }
 
-            if (booking.BookingStatus==(int)StaticData.BookingStatusEnum.Accepted)
-            {
-                btnCancelBooking.Visible = true;
-            }
+                if (booking.BookingStatus == (int)StaticData.BookingStatusEnum.Accepted)
+                {
+                    btnCancelBooking.Visible = true;
+                }
+            }        
         }
 
         private string GetBookingStatusName(int statusId)

@@ -6,6 +6,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -19,19 +20,18 @@ namespace DesktopManager.Forms
             InitializeComponent();
             _bookingService = new BookingService();
             LoadData();
+            UpdateDTA.RunWorkerAsync();
         }
 
         public void LoadData()
         {
             var data = _bookingService.LoadBookings();
 
-            dataGridView1.AutoGenerateColumns = false;
-            
+            dataGridView1.AutoGenerateColumns = false;            
             //dataGridView1.DataMember = 
             //dataGridView1.Columns[1].Name = "Category";
             //dataGridView1.Columns[2].Name = "Main Ingredients";
             //dataGridView1.Columns[3].Name = "Rating";
-
             dataGridView1.DataSource = data;
         }
         public enum BookingStatusEnum
@@ -40,6 +40,15 @@ namespace DesktopManager.Forms
             Pending = 2,
             Rejected = 3,
             Cancelled = 4
+        }
+
+        private void UpdateDTA_DoWork(object sender, DoWorkEventArgs e)
+        {
+            while (true)
+            {
+                Thread.Sleep(30000);
+                this.Invoke(new MethodInvoker(LoadData));                             
+            }
         }
     }
 }
