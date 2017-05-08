@@ -11,7 +11,7 @@ namespace TabApplication.DataRepository
         public HttpClient CreateHttpClient()
         {
             var client = new HttpClient();
-            client.BaseAddress = new Uri("http://iitstagecraftremotewebapi.azurewebsites.net"); //http://localhost:35903
+            client.BaseAddress = new Uri("http://iitstagecraftremotewebapitests.azurewebsites.net"); //http://localhost:35903 tests-iitstagecraftservertests.database.windows.net
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             return client;

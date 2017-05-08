@@ -109,6 +109,8 @@
     <Content Include="packages.config" />
     <None Include="Properties\PublishProfiles\IitStagecraftRemoteWebApi - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\IitStagecraftRemoteWebApi - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\IitStagecraftRemoteWebApiTests - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\IitStagecraftRemoteWebApiTests - Web Deploy.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

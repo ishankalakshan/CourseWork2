@@ -9,7 +9,7 @@ namespace IitStagecraftRemoteWebApi.DataRepository
     {
         public SqlConnection OpenDbConnection()
         {
-            return  new SqlConnection("Server=tcp:iitstagecraftserver.database.windows.net,1433;Initial Catalog=iitstagecraftremote;Persist Security Info=False;User ID=testadmin;Password=Intel@123;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
+            return  new SqlConnection("Server=tcp:iitstagecraftservertests.database.windows.net,1433;Initial Catalog=iitstagecraftremotetests;Persist Security Info=False;User ID=testadmin;Password=Intel@123;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
         }
 
         public IList<T> Select<T>(string sql, object parameters = null)
