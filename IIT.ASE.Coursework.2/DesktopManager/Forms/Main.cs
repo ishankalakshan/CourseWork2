@@ -1,14 +1,11 @@
 ﻿using DesktopManager.Services;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using DesktopManager.Utility;
 
 namespace DesktopManager.Forms
 {
@@ -35,21 +32,14 @@ namespace DesktopManager.Forms
             //dataGridView1.Columns[3].Name = "Rating";
             dataGridView1.DataSource = data;
         }
-        public enum BookingStatusEnum
-        {
-            Accepted = 1,
-            Pending = 2,
-            Rejected = 3,
-            Cancelled = 4
-        }
-
+        
         private void BindStatusDropDown()
         {
             cbRequestStatus.DisplayMember = "Value";
             cbRequestStatus.ValueMember = "Key";
 
-            cbRequestStatus.DataSource = Enum.GetValues(typeof(BookingStatusEnum))
-                .Cast<BookingStatusEnum>()
+            cbRequestStatus.DataSource = Enum.GetValues(typeof(StaticData.BookingStatusEnum))
+                .Cast<StaticData.BookingStatusEnum>()
                 .Select(p => new { Key = (int)p, Value = p.ToString() })
                 .ToList();
         }

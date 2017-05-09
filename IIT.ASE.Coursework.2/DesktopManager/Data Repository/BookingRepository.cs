@@ -30,6 +30,12 @@ namespace DesktopManager.Data_Repository
 
             return _baseRepo.Select<CBookingCustomer>(sql);
         }
-            
+
+        public IList<Booking> GetAllBookings()
+        {
+            var sql = "SELECT * FROM Bookings";
+            return _baseRepo.Select<Booking>(sql);
+        }
+
     }
 }
