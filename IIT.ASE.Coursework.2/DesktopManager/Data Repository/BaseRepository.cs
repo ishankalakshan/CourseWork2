@@ -29,5 +29,14 @@ namespace DesktopManager.Data_Repository
                 return result;
             }
         }
+
+        //wrapper for updating databse records
+        public void Update(string sql, object parameters = null)
+        {
+            using (var db = OpenDbConnection())
+            {
+                var result = db.Execute(sql, parameters);
+            }
+        }
     }
 }

@@ -34,5 +34,38 @@ namespace DesktopManager.Services
             };
             return retObj;
         }
+
+        public bool UpdateBookingStatus(int bookingId,int seatId)
+        {
+            var isReserved = _bookingRepo.IsSeatReserved(seatId);
+            if (isReserved)
+            {               
+                _bookingRepo.UpdateBookingStatus(bookingId, (int)StaticData.BookingStatusEnum.Rejected);             
+                return false;
+            }
+            else
+            {                
+                _bookingRepo.UpdateBookingStatus(bookingId,(int)StaticData.BookingStatusEnum.Accepted);
+                _bookingRepo.UpdateSeatStatus(seatId, (int)StaticData.SeatStatusEnum.Reserved);
+
+                var rejBookingIds = GetSameSeatPendingBookingIds(seatId);
+                RejectAllPendingBookingsForAcceptedSeat(rejBookingIds);
+                return true;
+            }
+            
+        }
+
+        public IList<int> GetSameSeatPendingBookingIds(int seatId) 
+        {
+            return _bookingRepo.GetSameSeatPendingBookingIds(seatId);
+        }
+
+        public void RejectAllPendingBookingsForAcceptedSeat(IList<int> bookingIds)
+        {
+            foreach (var booking in bookingIds)
+            {
+                _bookingRepo.UpdateBookingStatus(booking, (int)StaticData.BookingStatusEnum.Rejected);
+            }
+        }
     }
 }

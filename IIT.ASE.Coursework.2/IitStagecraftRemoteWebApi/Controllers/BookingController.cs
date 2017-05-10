@@ -81,6 +81,12 @@ namespace IitStagecraftRemoteWebApi.Controllers
         {
             _bookingRepository.CancelBooking(booking);
         }
-       
+
+        [HttpPost]
+        [Route("api/GetBookingUpdates")]
+        public IList<Booking> GetBookingUpdates(IList<Booking> bookings)
+        {
+            return _bookingRepository.Getbookingupdates(bookings);
+        }
     }
 }

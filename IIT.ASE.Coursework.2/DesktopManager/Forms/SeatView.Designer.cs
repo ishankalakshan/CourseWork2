@@ -42,11 +42,14 @@
             this.seatId_100 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.gbSeatPlan = new System.Windows.Forms.GroupBox();
+            this.btnClose = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
             this.gbSeatPlan.SuspendLayout();
             this.SuspendLayout();
             // 
             // seatId_106
             // 
+            this.seatId_106.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.seatId_106.Location = new System.Drawing.Point(471, 135);
             this.seatId_106.Name = "seatId_106";
             this.seatId_106.Size = new System.Drawing.Size(75, 23);
@@ -56,6 +59,7 @@
             // 
             // seatId_105
             // 
+            this.seatId_105.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.seatId_105.Location = new System.Drawing.Point(471, 94);
             this.seatId_105.Name = "seatId_105";
             this.seatId_105.Size = new System.Drawing.Size(75, 23);
@@ -65,6 +69,7 @@
             // 
             // seatId_109
             // 
+            this.seatId_109.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.seatId_109.Location = new System.Drawing.Point(172, 135);
             this.seatId_109.Name = "seatId_109";
             this.seatId_109.Size = new System.Drawing.Size(75, 23);
@@ -74,6 +79,7 @@
             // 
             // seatId_102
             // 
+            this.seatId_102.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.seatId_102.Location = new System.Drawing.Point(172, 94);
             this.seatId_102.Name = "seatId_102";
             this.seatId_102.Size = new System.Drawing.Size(75, 23);
@@ -83,6 +89,7 @@
             // 
             // seatId_107
             // 
+            this.seatId_107.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.seatId_107.Location = new System.Drawing.Point(390, 135);
             this.seatId_107.Name = "seatId_107";
             this.seatId_107.Size = new System.Drawing.Size(75, 23);
@@ -92,6 +99,7 @@
             // 
             // seatId_104
             // 
+            this.seatId_104.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.seatId_104.Location = new System.Drawing.Point(390, 94);
             this.seatId_104.Name = "seatId_104";
             this.seatId_104.Size = new System.Drawing.Size(75, 23);
@@ -101,6 +109,7 @@
             // 
             // seatId_110
             // 
+            this.seatId_110.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.seatId_110.Location = new System.Drawing.Point(91, 135);
             this.seatId_110.Name = "seatId_110";
             this.seatId_110.Size = new System.Drawing.Size(75, 23);
@@ -110,6 +119,7 @@
             // 
             // seatId_101
             // 
+            this.seatId_101.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.seatId_101.Location = new System.Drawing.Point(91, 94);
             this.seatId_101.Name = "seatId_101";
             this.seatId_101.Size = new System.Drawing.Size(75, 23);
@@ -119,6 +129,7 @@
             // 
             // seatId_108
             // 
+            this.seatId_108.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.seatId_108.Location = new System.Drawing.Point(309, 135);
             this.seatId_108.Name = "seatId_108";
             this.seatId_108.Size = new System.Drawing.Size(75, 23);
@@ -128,6 +139,7 @@
             // 
             // seatId_103
             // 
+            this.seatId_103.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.seatId_103.Location = new System.Drawing.Point(309, 94);
             this.seatId_103.Name = "seatId_103";
             this.seatId_103.Size = new System.Drawing.Size(75, 23);
@@ -137,6 +149,7 @@
             // 
             // seatId_111
             // 
+            this.seatId_111.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.seatId_111.Location = new System.Drawing.Point(10, 135);
             this.seatId_111.Name = "seatId_111";
             this.seatId_111.Size = new System.Drawing.Size(75, 23);
@@ -146,6 +159,7 @@
             // 
             // seatId_100
             // 
+            this.seatId_100.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.seatId_100.Location = new System.Drawing.Point(10, 94);
             this.seatId_100.Name = "seatId_100";
             this.seatId_100.Size = new System.Drawing.Size(75, 23);
@@ -185,11 +199,33 @@
             this.gbSeatPlan.TabIndex = 2;
             this.gbSeatPlan.TabStop = false;
             // 
+            // btnClose
+            // 
+            this.btnClose.Location = new System.Drawing.Point(522, 334);
+            this.btnClose.Name = "btnClose";
+            this.btnClose.Size = new System.Drawing.Size(75, 23);
+            this.btnClose.TabIndex = 3;
+            this.btnClose.Text = "Close";
+            this.btnClose.UseVisualStyleBackColor = true;
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(422, 334);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.TabIndex = 3;
+            this.button2.Text = "button1";
+            this.button2.UseVisualStyleBackColor = true;
+            // 
             // SeatView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(618, 369);
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.btnClose);
             this.Controls.Add(this.gbSeatPlan);
             this.Name = "SeatView";
             this.Text = "SeatView";
@@ -213,5 +249,7 @@
         private System.Windows.Forms.Button seatId_100;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox gbSeatPlan;
+        private System.Windows.Forms.Button btnClose;
+        private System.Windows.Forms.Button button2;
     }
 }

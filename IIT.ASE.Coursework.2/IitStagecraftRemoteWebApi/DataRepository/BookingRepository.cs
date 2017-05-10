@@ -17,7 +17,7 @@ namespace IitStagecraftRemoteWebApi.DataRepository
         public void GetSeatDetails(CBookingCustomer cb, out Seat selectedseat, out bool isSeatAvailable)
         {
             selectedseat = _baseRepo.Select<Seat>("select * from Seats where seatid=" + cb.SeatId).Single();
-            isSeatAvailable = selectedseat.SeatStatusId == (int)StaticData.SeatStatusEnum.Available ? true : false;
+            isSeatAvailable = (selectedseat.SeatStatusId != (int)StaticData.SeatStatusEnum.Reserved) ? true : false;
         }
 
         public int InsertOrUpdateCustomer(Customer customer)
@@ -78,11 +78,19 @@ namespace IitStagecraftRemoteWebApi.DataRepository
             _baseRepo.Execute(sql2, queryArgs2);
         }
 
-        //public void GetBookingUpdates(IList<BookingUpdate> bookingList)
-        //{
-        //    var sql = "SELECT * FROM Bookings WHERE BookingId=@BookingId AND DeviceId=@DeviceId";
-        //    _baseRepo.Select<BookingUpdate>(sql, bookingList);
-        //}
+        public IList<Booking> Getbookingupdates(IList<Booking> bookinglist)
+        {
+            var sql = "select * from bookings join seats on bookings.seat_id=seats.id";
+            var allBookings = _baseRepo.Select<Booking>(sql);
+            IList<Booking> updatedBookings = new List<Booking>();
+
+            foreach (var item in bookinglist)
+            {
+                updatedBookings.Add(allBookings.FirstOrDefault(b => b.BookingId == item.BookingId && b.DeviceId == item.DeviceId));
+            }
+
+            return updatedBookings;
+        }
 
         public void CancelBooking(IList<Booking> booking)
         {

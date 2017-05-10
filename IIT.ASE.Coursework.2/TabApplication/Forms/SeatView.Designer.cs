@@ -323,7 +323,7 @@
             // 
             // UpdateSeatWorker
             // 
-            this.UpdateSeatWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.UpdateSeatWorker_DoWork);
+            this.UpdateSeatWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.UpdateSeatWorker_DoWorkAsync);
             // 
             // btnExit
             // 

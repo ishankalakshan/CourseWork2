@@ -27,6 +27,7 @@ namespace TabApplication.Forms
             _seatService = new SeatService();
             _bookingService = new BookingService();
             InitializeData();
+            
             backgroundWorker1.RunWorkerAsync();
             UpdateSeatWorker.RunWorkerAsync();
         }
@@ -167,7 +168,7 @@ namespace TabApplication.Forms
                 {
                      _bookingService.UploadBookingsToRemoteAsync();    
                      _bookingService.UploadCancelledBookingsToRemoteAsync();
-                    Thread.Sleep(180000);
+                    Thread.Sleep(10000);
                 }
             }
             catch (Exception ex)
@@ -179,16 +180,23 @@ namespace TabApplication.Forms
         //use to fprce refresh seat status from local database
         private void RefreshButton_Click(object sender, EventArgs e)
         {
-            UpdateSeatStatus();
+            UpdateSeatStatus();          
+        }
+
+        //get uploaded pending bookings status
+        private async Task GetUploadedPendingBookingStatusAsync()
+        {
+            await _bookingService.UpdatePendingBookingsFromRemoteAsync();
         }
 
         //this background worker is used to load seat status from local database. That methos is called every minute.
-        private void UpdateSeatWorker_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
+        private void UpdateSeatWorker_DoWorkAsync(object sender, System.ComponentModel.DoWorkEventArgs e)
         {
             while (true)
             {
                 UpdateSeatStatus();
-                Thread.Sleep(60000);
+                GetUploadedPendingBookingStatusAsync();
+                Thread.Sleep(30000);
             }
         }
 

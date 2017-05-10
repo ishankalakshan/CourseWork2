@@ -127,5 +127,17 @@ namespace TabApplication.DataRepository
             var sql = "UPDATE Booking SET BookingStatus=@BookingStatus,Uploaded=0 WHERE BookingId=@BookingId;UPDATE Seat SET SeatStatusId=@seatStatusId WHERE SeatId IN(SELECT SeatId FROM Booking WHERE BookingId=@BookingId);";
             _baseRepository.Update(sql, queryArgs);
         }
+
+        //used to get Pending uploaded booking ids
+        public IList<Booking> SelectPendingUploadedBookings()
+        {
+            var uploaded = true;
+            var queryArgs = new
+            {
+                uploaded
+            };
+            var sql = "SELECT * FROM Booking WHERE Booking.Uploaded=@uploaded AND Booking.BookingStatus=2";
+            return _baseRepository.Select<Booking>(sql, queryArgs);
+        }
     }
 }

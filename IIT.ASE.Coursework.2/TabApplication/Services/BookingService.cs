@@ -175,6 +175,22 @@ namespace TabApplication.Services
             _bookingRepository.CancelBooking(bookingId);
         }
 
-
+        //used to Update Pending Bookings in local From Remote
+        public async Task UpdatePendingBookingsFromRemoteAsync()
+        {
+            var bookings = _bookingRepository.SelectPendingUploadedBookings();
+            if (bookings.Count > 0)
+            {
+                using (var client = _baseWebApi.CreateHttpClient())
+                {
+                    var response = await client.PostAsJsonAsync("api/GetBookingUpdates", bookings);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var result = await response.Content.ReadAsAsync<IList<Booking>>();
+                        UpdateBookingStatusAndSeatStatus(result);
+                    }
+                }
+            }
+        }
     }
 }

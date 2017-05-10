@@ -21,7 +21,7 @@ namespace DesktopManager.Forms
             BindStatusDropDown();
             LoadData();
             UpdateDTA.RunWorkerAsync();
-            GetDashBoard();
+           // GetDashBoard();
 
         }
 
@@ -29,29 +29,16 @@ namespace DesktopManager.Forms
         {
             var data = _bookingService.LoadBookings((int)cbRequestStatus.SelectedValue);
             dataGridView1.AutoGenerateColumns = false;            
-            //dataGridView1.DataMember = 
-            //dataGridView1.Columns[1].Name = "Category";
-            //dataGridView1.Columns[2].Name = "Main Ingredients";
-            //dataGridView1.Columns[3].Name = "Rating";
             dataGridView1.DataSource = data;          
         }
 
         private void GetDashBoard()
         {
             var res =_bookingService.GetStatistics();
-
-            //this.chart1.ChartAreaType = ChartAreaType.Pie;
-            //PieSeries series = new PieSeries();
-            //series.DataPoints.Add(new PieDataPoint(60, "UK"));
-            //series.DataPoints.Add(new PieDataPoint(90, "Japan"));
-            //series.DataPoints.Add(new PieDataPoint(35, "Italy"));
-            //series.DataPoints.Add(new PieDataPoint(85, "US"));
-            //series.ShowLabels = true;
-            //this.chart1.Series.Add(series);
+            chart1.Series[0].Points.Clear();
             chart1.Series[0].Points.Add(new DataPoint(0, res.AcceptedCount) { LegendText="Reserved",Color=Color.Red});
             chart1.Series[0].Points.Add(new DataPoint(0, res.PendingCount) { LegendText = "Pending", Color = Color.Yellow });
             chart1.Series[0].Points.Add(new DataPoint(0, res.AvailableCount) { LegendText = "Available", Color = Color.Green });
-            //chart1.Series[0].Label = "#VALX #PERCENT{P0}";
         }
         
         private void BindStatusDropDown()
@@ -77,6 +64,60 @@ namespace DesktopManager.Forms
         private void cbRequestStatus_SelectedIndexChanged(object sender, EventArgs e)
         {
             LoadData();
+            if ((int)cbRequestStatus.SelectedValue==(int)StaticData.BookingStatusEnum.Pending)
+            {
+                btnApprove.Visible = true;
+            }
+            else
+            {
+                btnApprove.Visible = false;
+            }
+        }
+
+        private void btnSeatView_Click(object sender, EventArgs e)
+        {
+            new SeatView().Show();
+        }
+
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void btnRefresh_Click(object sender, EventArgs e)
+        {
+            GetDashBoard();
+        }
+
+        private void btnApprove_Click(object sender, EventArgs e)
+        {
+            if (dataGridView1.SelectedRows.Count==1)
+            {
+                var dialog = MessageBox.Show("By Aceppting this booking all the other booking to the " +
+                    "same seat will be rejected automatically. Do you want to continue? ", 
+                    "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+                var id = (int)dataGridView1.SelectedRows[0].Cells["BookingId"].Value;
+                var seatId = (int)dataGridView1.SelectedRows[0].Cells["Seat"].Value;
+
+                if (dialog== DialogResult.Yes)
+                {
+                    var result =_bookingService.UpdateBookingStatus(id, seatId);
+
+                    if (result)
+                    {
+                        MessageBox.Show("Booking approved !");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Booking Rejected !");
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("No booking selected.Please select a booking to approve.","Error",MessageBoxButtons.OK,MessageBoxIcon.Information);
+            }
         }
     }
 }

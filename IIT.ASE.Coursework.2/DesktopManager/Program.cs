@@ -17,7 +17,7 @@ namespace DesktopManager
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new SeatView());
+            Application.Run(new Main());
         }
     }
 }
