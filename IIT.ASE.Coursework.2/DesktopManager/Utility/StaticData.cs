@@ -9,5 +9,11 @@
             Rejected = 3,
             Cancelled = 4
         }
+        public enum SeatStatusEnum
+        {
+            Available = 1,
+            Pending = 2,
+            Reserved = 3
+        }
     }
 }

@@ -22,16 +22,15 @@ namespace DesktopManager.Services
         {
             return _bookingRepo.LoadBookings(statusId); 
         }
-        public Statistics GetStatistics(int statusId)
+        public Statistics GetStatistics()
         {
-            var allData = _bookingRepo.LoadBookings(statusId);
+            var allData = _bookingRepo.GetAllSeats();
             var retObj = new Statistics()
             {
                 TotalCount = allData.Count,
-                AcceptedCount = allData.Count(b=>b.BookingStatus==(int)StaticData.BookingStatusEnum.Accepted),
-                CancelledCount = allData.Count(b => b.BookingStatus == (int)StaticData.BookingStatusEnum.Cancelled),
-                PendingCount = allData.Count(b => b.BookingStatus == (int)StaticData.BookingStatusEnum.Pending),
-                RejectedCount = allData.Count(b => b.BookingStatus == (int)StaticData.BookingStatusEnum.Rejected)
+                AcceptedCount = allData.Count(b=>b.SeatStatusId==(int)StaticData.SeatStatusEnum.Reserved),
+                PendingCount = allData.Count(b => b.SeatStatusId == (int)StaticData.SeatStatusEnum.Pending),
+                AvailableCount = allData.Count(b => b.SeatStatusId == (int)StaticData.SeatStatusEnum.Available)
             };
             return retObj;
         }

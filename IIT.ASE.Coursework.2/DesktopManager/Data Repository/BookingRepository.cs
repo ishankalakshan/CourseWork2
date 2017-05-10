@@ -31,10 +31,10 @@ namespace DesktopManager.Data_Repository
             return _baseRepo.Select<CBookingCustomer>(sql);
         }
 
-        public IList<Booking> GetAllBookings()
+        public IList<Seat> GetAllSeats()
         {
-            var sql = "SELECT * FROM Bookings";
-            return _baseRepo.Select<Booking>(sql);
+            var sql = "SELECT * FROM Seats";
+            return _baseRepo.Select<Seat>(sql);
         }
 
     }
