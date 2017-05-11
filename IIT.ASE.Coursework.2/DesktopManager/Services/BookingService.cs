@@ -55,6 +55,11 @@ namespace DesktopManager.Services
             
         }
 
+        public void RejectBooking(int bookingId)
+        {
+            _bookingRepo.UpdateBookingStatus(bookingId, (int)StaticData.BookingStatusEnum.Rejected);
+        }
+
         public IList<int> GetSameSeatPendingBookingIds(int seatId) 
         {
             return _bookingRepo.GetSameSeatPendingBookingIds(seatId);

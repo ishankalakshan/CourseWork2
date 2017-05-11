@@ -91,7 +91,6 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\BookingController.cs" />
     <Compile Include="Controllers\SeatController.cs" />
-    <Compile Include="Controllers\TestController.cs" />
     <Compile Include="DataRepository\BaseRepository.cs" />
     <Compile Include="DataRepository\BookingRepository.cs" />
     <Compile Include="Global.asax.cs">

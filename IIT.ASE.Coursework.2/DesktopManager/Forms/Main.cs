@@ -66,10 +66,12 @@ namespace DesktopManager.Forms
             if ((int)cbRequestStatus.SelectedValue==(int)StaticData.BookingStatusEnum.Pending)
             {
                 btnApprove.Visible = true;
+                btnReject.Visible = true;
             }
             else
             {
                 btnApprove.Visible = false;
+                btnReject.Visible = false;
             }
         }
 
@@ -118,6 +120,27 @@ namespace DesktopManager.Forms
             else
             {
                 MessageBox.Show("No booking selected.Please select a booking to approve.","Error",MessageBoxButtons.OK,MessageBoxIcon.Information);
+            }
+        }
+
+        private void btnReject_Click(object sender, EventArgs e)
+        {
+            if (dataGridView1.SelectedRows.Count == 1)
+            {
+                var dialog = MessageBox.Show("Do you want to reject the booking? ",
+                    "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+                var id = (int)dataGridView1.SelectedRows[0].Cells["BookingId"].Value;
+
+                if (dialog == DialogResult.Yes)
+                {
+                    _bookingService.RejectBooking(id);
+                    LoadData();
+                }
+            }
+            else
+            {
+                MessageBox.Show("No booking selected.Please select a booking to reject.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
     }
