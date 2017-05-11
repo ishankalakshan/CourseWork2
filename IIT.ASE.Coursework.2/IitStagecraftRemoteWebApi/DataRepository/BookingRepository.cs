@@ -14,10 +14,10 @@ namespace IitStagecraftRemoteWebApi.DataRepository
         {
             _baseRepo = new BaseRepository();
         }
-        public void GetSeatDetails(CBookingCustomer cb, out Seat selectedseat, out bool isSeatAvailable)
+        public void GetSeatDetails(CBookingCustomer cb, out Seat selectedseat, out int isSeatAvailable)
         {
             selectedseat = _baseRepo.Select<Seat>("select * from Seats where seatid=" + cb.SeatId).Single();
-            isSeatAvailable = (selectedseat.SeatStatusId != (int)StaticData.SeatStatusEnum.Reserved) ? true : false;
+            isSeatAvailable = selectedseat.SeatStatusId;
         }
 
         public int InsertOrUpdateCustomer(Customer customer)

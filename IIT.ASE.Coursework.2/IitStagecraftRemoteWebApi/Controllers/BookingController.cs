@@ -34,8 +34,8 @@ namespace IitStagecraftRemoteWebApi.Controllers
 
                     //Get seat details related to the booking
                     Seat selectedseat;
-                    bool isSeatAvailable;
-                    _bookingRepository.GetSeatDetails(cb, out selectedseat, out isSeatAvailable);
+                    int seatStatusId;
+                    _bookingRepository.GetSeatDetails(cb, out selectedseat, out seatStatusId);
 
                     //check for pending bookings for the seat
                     bool noPendingBookinsForSeat = _bookingRepository.GetPendingBookingsForSeat(selectedseat);
@@ -47,11 +47,11 @@ namespace IitStagecraftRemoteWebApi.Controllers
                     insertedIds.Add(insertedBookingId);
 
                     //if there are not pending bookings and seat is available reserve the seat
-                    if (noPendingBookinsForSeat && isSeatAvailable)
+                    if (noPendingBookinsForSeat && (seatStatusId==(int)StaticData.SeatStatusEnum.Available))
                     {
                         _bookingRepository.ReserveSeatAndUpdateBookingStatus(selectedseat, insertedBookingId, (int)StaticData.BookingStatusEnum.Accepted, (int)StaticData.SeatStatusEnum.Reserved);
                     }
-                    else if (!isSeatAvailable)
+                    else if (seatStatusId == (int)StaticData.SeatStatusEnum.Reserved)
                     {
                         _bookingRepository.ReserveSeatAndUpdateBookingStatus(selectedseat, insertedBookingId, (int)StaticData.BookingStatusEnum.Rejected, (int)StaticData.SeatStatusEnum.Reserved);
                     }

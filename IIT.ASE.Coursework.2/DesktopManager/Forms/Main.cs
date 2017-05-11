@@ -20,16 +20,15 @@ namespace DesktopManager.Forms
             _bookingService = new BookingService();
             BindStatusDropDown();
             LoadData();
-            UpdateDTA.RunWorkerAsync();
-           // GetDashBoard();
-
+            UpdateDTA.RunWorkerAsync();           
         }
 
         public void LoadData()
         {
             var data = _bookingService.LoadBookings((int)cbRequestStatus.SelectedValue);
             dataGridView1.AutoGenerateColumns = false;            
-            dataGridView1.DataSource = data;          
+            dataGridView1.DataSource = data;
+            GetDashBoard();
         }
 
         private void GetDashBoard()
@@ -107,10 +106,12 @@ namespace DesktopManager.Forms
                     if (result)
                     {
                         MessageBox.Show("Booking approved !");
+                        LoadData();
                     }
                     else
                     {
                         MessageBox.Show("Booking Rejected !");
+                        LoadData();
                     }
                 }
             }
