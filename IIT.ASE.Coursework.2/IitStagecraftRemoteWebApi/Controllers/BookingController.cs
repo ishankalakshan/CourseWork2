@@ -18,7 +18,11 @@ namespace IitStagecraftRemoteWebApi.Controllers
             _baseRepo = new BaseRepository();
             _bookingRepository = new BookingRepository();
         }
-
+        /// <summary>
+        /// Insert a booking record.This will insert the customer if not already inserted and if the seat is free it will auto accept the booking
+        /// </summary>
+        /// <param name="cbooking">Needs a composite object of Customer and Booking class combined</param>
+        /// <returns></returns>
         [HttpPost]
         [Route("api/InsertBooking")]
         public IList<Booking> InsertBooking(IList<CBookingCustomer> cbooking)
@@ -67,21 +71,32 @@ namespace IitStagecraftRemoteWebApi.Controllers
 
 
         }
-
+        /// <summary>
+        /// Get customer details if exist in the remote database
+        /// </summary>
+        /// <param name="Nic">Csutomer nic</param>
+        /// <returns></returns>
         [HttpPost]
         [Route("api/GetCustomer")]
         public Customer SearchCustomer([FromBody] string Nic)
         {
             return _bookingRepository.SearchCustomer(Nic);
         }
-        
+        /// <summary>
+        /// Cancell the booking and update seat status
+        /// </summary>
+        /// <param name="booking"></param>
         [HttpPost]
         [Route("api/CancelBooking")]
         public void CancelBooking(IList<Booking> booking)
         {
             _bookingRepository.CancelBooking(booking);
         }
-
+        /// <summary>
+        /// Get pending booking updates of local device records
+        /// </summary>
+        /// <param name="bookings">send a booking object with booking details</param>
+        /// <returns></returns>
         [HttpPost]
         [Route("api/GetBookingUpdates")]
         public IList<Booking> GetBookingUpdates(IList<Booking> bookings)

@@ -14,10 +14,16 @@ namespace IitStagecraftRemoteWebApi.DataRepository
         {
             _baseRepo = new BaseRepository();
         }
-        public void GetSeatDetails(CBookingCustomer cb, out Seat selectedseat, out int isSeatAvailable)
+        /// <summary>
+        /// Get seat details
+        /// </summary>
+        /// <param name="cb">Composite customer booking object</param>
+        /// <param name="selectedseat">output selected seat object</param>
+        /// <param name="selectedSeatId">output selected Seat Id</param>
+        public void GetSeatDetails(CBookingCustomer cb, out Seat selectedseat, out int selectedSeatId)
         {
             selectedseat = _baseRepo.Select<Seat>("select * from Seats where seatid=" + cb.SeatId).Single();
-            isSeatAvailable = selectedseat.SeatStatusId;
+            selectedSeatId = selectedseat.SeatStatusId;
         }
 
         public int InsertOrUpdateCustomer(Customer customer)
@@ -91,7 +97,10 @@ namespace IitStagecraftRemoteWebApi.DataRepository
 
             return updatedBookings;
         }
-
+        /// <summary>
+        /// Cancel booking
+        /// </summary>
+        /// <param name="booking">Booking object</param>
         public void CancelBooking(IList<Booking> booking)
         {
             foreach (var item in booking)
@@ -109,7 +118,11 @@ namespace IitStagecraftRemoteWebApi.DataRepository
             }
 
         }
-
+        /// <summary>
+        /// Search customer
+        /// </summary>
+        /// <param name="Nic">customer nic</param>
+        /// <returns></returns>
         public Customer SearchCustomer(string Nic)
         {
             var queryargs = new
