@@ -12,19 +12,21 @@ namespace DesktopManager.Services
 {
     public class BookingService
     {
-        private BookingRepository _bookingRepo;
+        private BookingRepository _bookingRepository;
 
         public BookingService()
         {
-            _bookingRepo = new BookingRepository();
+            _bookingRepository = new BookingRepository();
         }
+
         public IList<CBookingCustomer> LoadBookings(int statusId)
         {
-            return _bookingRepo.LoadBookings(statusId); 
+            return _bookingRepository.LoadBookings(statusId); 
         }
+
         public Statistics GetStatistics()
         {
-            var allData = _bookingRepo.GetAllSeats();
+            var allData = _bookingRepository.GetAllSeats();
             var retObj = new Statistics()
             {
                 TotalCount = allData.Count,
@@ -37,16 +39,16 @@ namespace DesktopManager.Services
 
         public bool UpdateBookingStatus(int bookingId,int seatId)
         {
-            var isReserved = _bookingRepo.IsSeatReserved(seatId);
+            var isReserved = _bookingRepository.IsSeatReserved(seatId);
             if (isReserved)
             {               
-                _bookingRepo.UpdateBookingStatus(bookingId, (int)StaticData.BookingStatusEnum.Rejected);             
+                _bookingRepository.UpdateBookingStatus(bookingId, (int)StaticData.BookingStatusEnum.Rejected);             
                 return false;
             }
             else
             {                
-                _bookingRepo.UpdateBookingStatus(bookingId,(int)StaticData.BookingStatusEnum.Accepted);
-                _bookingRepo.UpdateSeatStatus(seatId, (int)StaticData.SeatStatusEnum.Reserved);
+                _bookingRepository.UpdateBookingStatus(bookingId,(int)StaticData.BookingStatusEnum.Accepted);
+                _bookingRepository.UpdateSeatStatus(seatId, (int)StaticData.SeatStatusEnum.Reserved);
 
                 var rejBookingIds = GetSameSeatPendingBookingIds(seatId);
                 RejectAllPendingBookingsForAcceptedSeat(rejBookingIds);
@@ -57,19 +59,19 @@ namespace DesktopManager.Services
 
         public void RejectBooking(int bookingId)
         {
-            _bookingRepo.UpdateBookingStatus(bookingId, (int)StaticData.BookingStatusEnum.Rejected);
+            _bookingRepository.UpdateBookingStatus(bookingId, (int)StaticData.BookingStatusEnum.Rejected);
         }
 
         public IList<int> GetSameSeatPendingBookingIds(int seatId) 
         {
-            return _bookingRepo.GetSameSeatPendingBookingIds(seatId);
+            return _bookingRepository.GetSameSeatPendingBookingIds(seatId);
         }
 
         public void RejectAllPendingBookingsForAcceptedSeat(IList<int> bookingIds)
         {
             foreach (var booking in bookingIds)
             {
-                _bookingRepo.UpdateBookingStatus(booking, (int)StaticData.BookingStatusEnum.Rejected);
+                _bookingRepository.UpdateBookingStatus(booking, (int)StaticData.BookingStatusEnum.Rejected);
             }
         }
     }

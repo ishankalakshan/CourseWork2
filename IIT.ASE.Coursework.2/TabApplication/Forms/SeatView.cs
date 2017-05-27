@@ -61,6 +61,7 @@ namespace TabApplication.Forms
             catch (Exception e)
             {
                 Console.WriteLine(e);
+                MessageBox.Show("Error occured while loading the application.", "Error");
                 throw;
             }
         }
@@ -123,7 +124,7 @@ namespace TabApplication.Forms
             }
             else if (seat.SeatStatusId == (int)StaticData.SeatStatusEnum.Reserved)
             {
-                buttton.BackColor = Color.Red;
+                buttton.BackColor = Color.Orange;
             }
         }
 
@@ -131,7 +132,6 @@ namespace TabApplication.Forms
         {
             var button = (Button)sender;
             var seatId = Convert.ToInt32(button.Name.Substring(button.Name.LastIndexOf('_') + 1));
-            //MessageBox.Show(seatId.ToString());
 
             if (button.BackColor==Color.Lime)
             {
@@ -141,7 +141,6 @@ namespace TabApplication.Forms
             {
                 LoadBookingInfoForm(seatId);
             }                     
-            //var res = testmethod();
         }
       
         public void SeatReceived(object sender, EventArgs e)
@@ -173,7 +172,8 @@ namespace TabApplication.Forms
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message); 
+                Console.WriteLine(ex.Message);
+                MessageBox.Show("Error occured while uploading data to server.Record will be automatically uploaded when network is available.", "Network error");
             }                       
         }
 
@@ -192,12 +192,19 @@ namespace TabApplication.Forms
         //this background worker is used to load seat status from local database. That methos is called every minute.
         private void UpdateSeatWorker_DoWorkAsync(object sender, System.ComponentModel.DoWorkEventArgs e)
         {
-            while (true)
+            try
             {
-                UpdateSeatStatus();
-                GetUploadedPendingBookingStatusAsync();
-                Thread.Sleep(30000);
+                while (true)
+                {
+                    UpdateSeatStatus();
+                    GetUploadedPendingBookingStatusAsync();
+                    Thread.Sleep(30000);
+                }
             }
+            catch (Exception)
+            {
+                MessageBox.Show("Error occured while retriving data from server.", "Network error");                
+            }           
         }
 
         private void btnExit_Click(object sender, EventArgs e)

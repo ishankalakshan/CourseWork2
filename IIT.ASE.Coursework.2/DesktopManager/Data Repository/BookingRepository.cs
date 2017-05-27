@@ -12,11 +12,11 @@ namespace DesktopManager.Data_Repository
 {
     public class BookingRepository
     {
-        private BaseRepository _baseRepo;
+        private BaseRepository _baseRepository;
 
         public BookingRepository()
         {
-            _baseRepo = new BaseRepository();
+            _baseRepository = new BaseRepository();
         }
 
         public IList<CBookingCustomer> LoadBookings(int statusId)
@@ -29,34 +29,34 @@ namespace DesktopManager.Data_Repository
                 "join Seats on Seats.id = bookings.seat_id " +
                 "where Bookings.BookingStatus="+statusId;
 
-            return _baseRepo.Select<CBookingCustomer>(sql);
+            return _baseRepository.Select<CBookingCustomer>(sql);
         }
 
         public IList<Seat> GetAllSeats()
         {
             var sql = "SELECT * FROM Seats";
-            return _baseRepo.Select<Seat>(sql);
+            return _baseRepository.Select<Seat>(sql);
         }
 
         public void UpdateBookingStatus(int bookingId,int statusId)
         {
             var queryParam = new { bookingId, statusId };
             var sql = "UPDATE Bookings SET BookingStatus=@statusId WHERE Id=@bookingId;";
-            _baseRepo.Update(sql, queryParam);
+            _baseRepository.Update(sql, queryParam);
         }
 
         public void UpdateSeatStatus(int seatId,int statusId)
         {
             var queryParam = new { seatId, statusId };
             var sql = "UPDATE Seats SET SeatStatusid=@statusId WHERE SeatId=@seatId;";
-            _baseRepo.Update(sql, queryParam);
+            _baseRepository.Update(sql, queryParam);
         }
 
         public bool IsSeatReserved(int seatId)
         {
             var queryParam = new { seatId };
             var sql = "select * from Seats where SeatId=@seatId";
-            var status = _baseRepo.Select<Seat>(sql, queryParam).FirstOrDefault();
+            var status = _baseRepository.Select<Seat>(sql, queryParam).FirstOrDefault();
 
             if (status.SeatStatusId==(int)StaticData.SeatStatusEnum.Reserved)
             {
@@ -72,7 +72,7 @@ namespace DesktopManager.Data_Repository
         {
             var queryParam = new { seatId };
             var sql = "select bookings.Id from bookings join seats on bookings.seat_id=seats.id where seats.SeatId=@seatId and bookings.bookingStatus=2";
-            return _baseRepo.Select<int>(sql,queryParam);
+            return _baseRepository.Select<int>(sql,queryParam);
         }
     }
 }
